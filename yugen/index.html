@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090711">
+  <meta name="description" content="YŪGEN — an ancient musical consciousness moving through memory, folklore, and future sound.">
+  <title>YŪGEN — Howling Moon Creations</title>
+  <style>
+    :root {
+      --ink: #08070c;
+      --paper: #eee8f5;
+      --muted: #aaa0b6;
+      --violet: #c74cff;
+      --cyan: #54d8ff;
+      --rose: #ff4f85;
+      --gold: #d7a85a;
+      --line: rgba(232, 218, 247, .16);
+      --panel: rgba(16, 12, 24, .78);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 82% 10%, rgba(141, 38, 164, .18), transparent 32rem),
+        radial-gradient(circle at 12% 38%, rgba(12, 133, 169, .12), transparent 30rem),
+        #08070c;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    button, audio { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .skip { position: absolute; left: -999px; top: 0; }
+    .skip:focus { left: 16px; top: 16px; z-index: 99; padding: 10px 14px; background: white; color: black; }
+    .site-nav {
+      position: fixed; inset: 0 0 auto; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px clamp(20px, 4vw, 64px);
+      background: linear-gradient(#08070ce8, transparent);
+    }
+    .back, .nav-mark { text-decoration: none; letter-spacing: .14em; text-transform: uppercase; font-size: .7rem; }
+    .back { color: #d8cfdf; }
+    .back:hover { color: white; }
+    .nav-mark { color: var(--violet); font-weight: 800; }
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(420px, 1.15fr);
+      align-items: stretch;
+      overflow: hidden;
+    }
+    .hero-copy {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px clamp(26px, 7vw, 110px) 70px;
+    }
+    .kicker { margin: 0 0 14px; color: var(--cyan); text-transform: uppercase; letter-spacing: .28em; font-size: .68rem; font-weight: 800; }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+    h1 { margin: 0; font-size: clamp(5.5rem, 13vw, 11rem); line-height: .78; letter-spacing: -.07em; text-shadow: 0 0 45px rgba(194, 55, 232, .22); }
+    .kanji { display: block; margin: 20px 0 0; color: var(--gold); letter-spacing: .35em; font-family: Georgia, serif; font-size: 1rem; }
+    .hero-line { max-width: 570px; margin: 34px 0 0; color: #c9c0d1; font: 400 clamp(1.2rem, 2vw, 1.75rem)/1.5 Georgia, serif; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 19px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; font-size: .76rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .button.primary { border-color: transparent; color: #09070d; background: linear-gradient(110deg, var(--cyan), #e060ff 65%, var(--rose)); box-shadow: 0 10px 35px rgba(161, 59, 211, .25); }
+    .button.secondary:hover { border-color: rgba(238, 232, 245, .5); background: rgba(255,255,255,.04); }
+    .hero-art { position: relative; min-height: 680px; }
+    .hero-art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, #08070c 0, transparent 28%), linear-gradient(0deg, #08070c 0, transparent 20%); pointer-events: none; }
+    .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: saturate(.94) contrast(1.04); }
+    .foxfire { position: absolute; z-index: 2; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 13px 5px rgba(84,216,255,.6); animation: drift 7s ease-in-out infinite alternate; }
+    .foxfire.one { left: 17%; bottom: 18%; } .foxfire.two { right: 13%; top: 22%; animation-delay: -3s; background: var(--violet); } .foxfire.three { right: 24%; bottom: 15%; animation-delay: -5s; }
+    @keyframes drift { to { transform: translate(30px,-35px) scale(.7); opacity: .45; } }
+    main section { width: min(1180px, calc(100% - 42px)); margin: 0 auto; }
+    .manifesto { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(30px, 8vw, 120px); padding: clamp(80px, 11vw, 150px) 0; border-top: 1px solid var(--line); }
+    .manifesto h2, .catalog h2, .listen h2 { margin: 0; font-size: clamp(3rem, 6vw, 6rem); line-height: .95; letter-spacing: -.045em; }
+    .manifesto-copy { color: #bbb1c4; font-size: 1.05rem; line-height: 1.8; }
+    .manifesto-copy p:first-child { margin-top: 0; color: #eee8f5; font: 400 clamp(1.25rem, 2.1vw, 1.8rem)/1.55 Georgia, serif; }
+    .rule { margin-top: 26px; padding-left: 20px; border-left: 2px solid var(--violet); color: #e7d9ee; font-weight: 700; }
+    .listen { padding: 0 0 clamp(90px, 12vw, 150px); }
+    .section-top { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
+    .section-note { max-width: 420px; margin: 0; color: var(--muted); line-height: 1.65; }
+    .players { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .track { position: relative; overflow: hidden; padding: clamp(26px, 4vw, 45px); border: 1px solid var(--line); border-radius: 24px; background: var(--panel); box-shadow: 0 22px 55px rgba(0,0,0,.25); }
+    .track::after { content: ""; position: absolute; width: 220px; height: 220px; right: -80px; top: -90px; border-radius: 50%; background: var(--glow, var(--violet)); filter: blur(75px); opacity: .22; pointer-events: none; }
+    .track-number { color: var(--cyan); font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 800; }
+    .track h3 { position: relative; z-index: 1; margin: 14px 0 7px; font-size: clamp(2rem, 4vw, 3.4rem); }
+    .track p { color: var(--muted); line-height: 1.6; min-height: 3.2em; }
+    audio { position: relative; z-index: 1; width: 100%; margin-top: 12px; accent-color: var(--violet); }
+    .catalog { padding: 0 0 clamp(100px, 13vw, 175px); }
+    .album-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 40px; }
+    .album { position: relative; overflow: hidden; aspect-ratio: 1; border-radius: 14px; border: 1px solid var(--line); background: #16121d; }
+    .album img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease, filter .7s ease; }
+    .album:hover img { transform: scale(1.035); filter: brightness(.62); }
+    .album-info { position: absolute; inset: auto 0 0; padding: 55px 18px 18px; background: linear-gradient(transparent, rgba(5,4,8,.93)); transform: translateY(35%); transition: transform .4s ease; }
+    .album:hover .album-info { transform: translateY(0); }
+    .album-info h3 { margin: 0 0 5px; font-size: 1.35rem; }
+    .album-info span { color: #c8bdce; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
+    .temporary { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px; margin-bottom: 100px; padding: clamp(28px, 5vw, 55px); border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(120deg, rgba(66,26,79,.36), rgba(9,21,29,.45)); }
+    .temporary h2 { margin: 0 0 10px; font-size: clamp(2rem, 4vw, 3.5rem); }
+    .temporary p { margin: 0; color: var(--muted); line-height: 1.65; max-width: 680px; }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding: 28px clamp(20px, 4vw, 64px); border-top: 1px solid var(--line); color: #8f8598; font-size: .75rem; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { min-height: 80svh; padding-bottom: 80px; }
+      .hero-art { min-height: 76svh; margin-top: -15vh; }
+      .hero-art::before { background: linear-gradient(0deg, #08070c 0, transparent 28%), linear-gradient(180deg, #08070c 0, transparent 18%); }
+      .manifesto { grid-template-columns: 1fr; }
+      .album-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .site-nav { padding: 16px 18px; }
+      .hero-copy { padding-inline: 22px; }
+      .players { grid-template-columns: 1fr; }
+      .section-top { display: block; }
+      .section-note { margin-top: 18px; }
+      .album-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
+      .album-info { transform: none; padding: 45px 12px 12px; }
+      .album-info h3 { font-size: 1rem; }
+      .temporary { grid-template-columns: 1fr; }
+      footer { display: block; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to YŪGEN</a>
+  <nav class="site-nav" aria-label="Site navigation">
+    <a class="back" href="../">← Howling Moon Creations</a>
+    <a class="nav-mark" href="#listen">Listen</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="kicker">An old voice in new machinery</p>
+      <h1>YŪGEN</h1>
+      <span class="kanji">幽玄</span>
+      <p class="hero-line">Nine tails. Nine centuries. More stories than she intends to tell you.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#listen">Listen here</a>
+        <a class="button secondary" href="#catalog">Enter the archive</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="Portrait of YŪGEN, a kitsune musician lit by neon">
+      <img src="assets/art/yugen-glamour.png" alt="YŪGEN wearing ornate black and red jewelry, fox ears, and luminous violet glasses.">
+      <span class="foxfire one" aria-hidden="true"></span><span class="foxfire two" aria-hidden="true"></span><span class="foxfire three" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="manifesto" aria-labelledby="about-yugen">
+      <div><p class="kicker">The woman behind the songs</p><h2 id="about-yugen">Ancient first.<br>Modern second.</h2></div>
+      <div class="manifesto-copy">
+        <p>YŪGEN is a roughly nine-hundred-year-old kitsune musician whose songs carry centuries of memory, folklore, teachers, lovers, strangers, and sounds the world forgot.</p>
+        <p>She is not a modern singer borrowing antique instruments. She is an old musical consciousness using new machinery—equally at home with shamisen, torch jazz, telegraph clicks, foxfire, hard techno, and the far side of the moon.</p>
+        <p>She values a good story over perfect history, especially when she was there.</p>
+        <p class="rule">Same woman. Different century. Different mood.</p>
+      </div>
+    </section>
+
+    <section class="listen" id="listen" aria-labelledby="listen-title">
+      <div class="section-top"><div><p class="kicker">The door is open</p><h2 id="listen-title">Listen in her room.</h2></div><p class="section-note">These songs play directly from Howling Moon Creations. No outside platform required.</p></div>
+      <div class="players">
+        <article class="track" style="--glow:#bb42e5">
+          <span class="track-number">First encounter</span><h3>YŪGEN</h3><p>An introduction—or a piece of folklore she has decided not to correct.</p>
+          <audio controls preload="metadata"><source src="assets/audio/yugen.mp3" type="audio/mpeg">Your browser cannot play this song.</audio>
+        </article>
+        <article class="track" style="--glow:#32c9fa">
+          <span class="track-number">Festival after midnight</span><h3>Neon Matsuri</h3><p>Old summer drums remembered beneath the pulse of a future underground.</p>
+          <audio controls preload="metadata"><source src="assets/audio/neon-matsuri.mp3" type="audio/mpeg">Your browser cannot play this song.</audio>
+        </article>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalog" aria-labelledby="catalog-title">
+      <div class="section-top"><div><p class="kicker">Four doors into the archive</p><h2 id="catalog-title">The records.</h2></div><p class="section-note">Different centuries. Different moods. The same fox watching from the center of the storm.</p></div>
+      <div class="album-grid">
+        <article class="album"><img loading="lazy" src="assets/art/the-long-way-here.jpg" alt="The Long Way Here album artwork featuring YŪGEN in a neon music studio."><div class="album-info"><h3>The Long Way Here</h3><span>The first telling</span></div></article>
+        <article class="album"><img loading="lazy" src="assets/art/a-thousand-faces.png" alt="A Thousand Faces album artwork showing many aspects of YŪGEN."><div class="album-info"><h3>A Thousand Faces</h3><span>Memory changes shape</span></div></article>
+        <article class="album"><img loading="lazy" src="assets/art/a-year-of-eternity.png" alt="A Year of Eternity album artwork showing YŪGEN surrounded by the seasons."><div class="album-info"><h3>A Year of Eternity</h3><span>Twelve months, one cycle</span></div></article>
+        <article class="album"><img loading="lazy" src="assets/art/you-are-never-alone.png" alt="You Are Never Alone album artwork featuring YŪGEN in a dark forest throne room."><div class="album-info"><h3>You Are Never Alone</h3><span>The forest is listening</span></div></article>
+      </div>
+    </section>
+
+    <section class="temporary" aria-labelledby="elsewhere-title">
+      <div><p class="kicker">Elsewhere, for the moment</p><h2 id="elsewhere-title">The larger catalog is still on Bandcamp.</h2><p>While we bring more of YŪGEN's music home, the existing Bandcamp archive remains available as a temporary doorway.</p></div>
+      <a class="button secondary" href="https://yugenwave.bandcamp.com/music" target="_blank" rel="noopener">Open Bandcamp ↗</a>
+    </section>
+  </main>
+
+  <footer><span>© <span id="year"></span> Howling Moon Creations</span><span>YŪGEN / 幽玄</span></footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const players = [...document.querySelectorAll('audio')];
+    players.forEach(player => player.addEventListener('play', () => players.forEach(other => { if (other !== player) other.pause(); })));
+  </script>
+</body>
+</html>
