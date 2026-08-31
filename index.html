@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b10">
+  <meta name="description" content="Howling Moon Creations — handmade goods, music, stories, games, and strange little worlds created after dark.">
+  <title>Howling Moon Creations</title>
+  <style>
+:root {
+  --ink: #0b0b10;
+  --ink-soft: #12131b;
+  --paper: #efe9dc;
+  --muted: #b9b0a3;
+  --gold: #c8b27e;
+  --gold-soft: #8f7c56;
+  --line: rgba(226, 214, 188, .18);
+  --max: 1180px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 72% 0%, rgba(65, 63, 88, .22), transparent 34rem),
+    linear-gradient(180deg, #0a0b11 0%, #0d0e14 42%, #090a0d 100%);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+
+.sky {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 980px;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.sky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 16% 18%, rgba(255,255,255,.82) 0 1px, transparent 1.3px),
+    radial-gradient(circle at 25% 9%, rgba(255,255,255,.5) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 43% 15%, rgba(255,255,255,.66) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 61% 7%, rgba(255,255,255,.5) 0 1px, transparent 1.1px),
+    radial-gradient(circle at 82% 23%, rgba(255,255,255,.7) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 92% 11%, rgba(255,255,255,.45) 0 1px, transparent 1.2px);
+  opacity: .38;
+}
+.moon {
+  position: absolute;
+  top: 112px;
+  left: 50%;
+  width: 420px;
+  height: 420px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255,255,255,.9), rgba(233,227,212,.96) 38%, rgba(192,186,176,.82) 70%, rgba(144,140,140,.55) 100%);
+  box-shadow: 0 0 55px rgba(225,218,202,.2), 0 0 170px rgba(179,178,198,.12);
+  opacity: .16;
+}
+.moon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 63% 40%, rgba(30,30,36,.2) 0 6%, transparent 7%),
+    radial-gradient(circle at 42% 64%, rgba(30,30,36,.14) 0 9%, transparent 10%),
+    radial-gradient(circle at 28% 42%, rgba(30,30,36,.12) 0 5%, transparent 6%);
+}
+.mist {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  height: 220px;
+  filter: blur(28px);
+  opacity: .18;
+  background: linear-gradient(90deg, transparent, rgba(190,194,202,.7) 30%, rgba(255,255,255,.4) 50%, rgba(180,184,194,.62) 72%, transparent);
+}
+.mist-one { top: 470px; transform: rotate(-3deg); }
+.mist-two { top: 650px; transform: rotate(2deg); opacity: .09; }
+.ridge { position: absolute; left: -8%; width: 116%; transform-origin: center; }
+.ridge::before { content: ""; display: block; width: 100%; height: 100%; }
+.ridge-back {
+  bottom: 108px;
+  height: 240px;
+  opacity: .55;
+  background: linear-gradient(165deg, transparent 0 20%, #141721 20.2% 26%, transparent 26.2%),
+              linear-gradient(195deg, transparent 0 28%, #131620 28.2% 35%, transparent 35.2%),
+              linear-gradient(170deg, transparent 0 41%, #151822 41.2% 50%, transparent 50.2%),
+              linear-gradient(188deg, transparent 0 58%, #12151e 58.2% 68%, transparent 68.2%);
+}
+.ridge-front {
+  bottom: -20px;
+  height: 270px;
+  opacity: .78;
+  background: linear-gradient(172deg, transparent 0 15%, #090b10 15.2% 27%, transparent 27.2%),
+              linear-gradient(188deg, transparent 0 29%, #090b10 29.2% 42%, transparent 42.2%),
+              linear-gradient(171deg, transparent 0 46%, #090b10 46.2% 57%, transparent 57.2%),
+              linear-gradient(191deg, transparent 0 62%, #090b10 62.2% 75%, transparent 75.2%);
+}
+
+.site-header {
+  position: relative;
+  z-index: 5;
+  width: min(var(--max), calc(100% - 36px));
+  margin: 0 auto;
+  padding: 26px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.brand-mini { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; letter-spacing: .18em; font-size: .76rem; color: #e8dec7; }
+.brand-mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid rgba(210,192,151,.35); border-radius: 50%; font-size: 1.15rem; }
+nav { display: flex; gap: clamp(15px, 3vw, 34px); }
+nav a { text-decoration: none; color: #afa89d; font-size: .83rem; }
+nav a:hover { color: #f1e9d9; }
+
+main, footer { position: relative; z-index: 2; }
+.hero {
+  min-height: 850px;
+  width: min(940px, calc(100% - 38px));
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 0 120px;
+}
+.sigil { width: 145px; height: 145px; margin-bottom: 5px; filter: drop-shadow(0 0 24px rgba(198,176,127,.1)); }
+.eyebrow { margin: 0 0 13px; color: #a8956d; text-transform: uppercase; letter-spacing: .24em; font-size: .68rem; font-weight: 700; }
+.hero h1, .section-heading h2, .about h2, .contact h2, .portal h3, .room-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+.hero h1 { margin: 0; font-size: clamp(3.7rem, 9vw, 7.5rem); line-height: .78; letter-spacing: -.055em; text-shadow: 0 12px 44px rgba(0,0,0,.5); }
+.hero h1 span { color: #c9b88f; font-style: italic; font-size: .8em; }
+.tagline { margin: 30px 0 8px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.25rem, 3vw, 1.8rem); color: #d7cebb; font-style: italic; }
+.intro { width: min(700px, 100%); margin: 6px auto 28px; color: #aaa49b; font-size: 1rem; line-height: 1.75; }
+.primary-button, .secondary-button {
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  border: 1px solid rgba(205,185,140,.36); border-radius: 999px; padding: 13px 20px;
+  color: #e8dec8; background: rgba(22,22,29,.5); backdrop-filter: blur(12px);
+  font-size: .82rem; letter-spacing: .04em; transition: .25s ease;
+}
+.primary-button:hover, .secondary-button:hover { transform: translateY(-2px); border-color: rgba(205,185,140,.7); background: rgba(35,32,34,.7); }
+
+.worlds { width: min(var(--max), calc(100% - 36px)); margin: 0 auto; padding: 100px 0 110px; }
+.section-heading { max-width: 700px; margin-bottom: 45px; }
+.section-heading h2, .about h2, .contact h2 { margin: 0 0 16px; font-size: clamp(2.3rem, 5vw, 4.2rem); letter-spacing: -.04em; line-height: 1.03; }
+.section-heading > p:last-child, .about > p, .contact p { color: #a8a198; line-height: 1.75; }
+
+.portal-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+.portal {
+  grid-column: span 6;
+  min-height: 430px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  border: 1px solid rgba(238,224,194,.12);
+  border-radius: 24px;
+  text-decoration: none;
+  background: #13141b;
+  isolation: isolate;
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.portal::before, .portal::after { content: ""; position: absolute; inset: 0; z-index: -2; }
+.portal::after { z-index: -1; background: linear-gradient(180deg, transparent 10%, rgba(8,8,12,.12) 42%, rgba(7,7,10,.94) 100%); }
+.portal:hover { transform: translateY(-5px); border-color: rgba(220,202,161,.34); box-shadow: 0 24px 60px rgba(0,0,0,.28); }
+.portal-art { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; }
+.portal-icon { position: absolute; right: 9%; top: 5%; font-family: Georgia, serif; font-size: clamp(8rem, 16vw, 13rem); line-height: 1; opacity: .09; transform: rotate(5deg); transition: transform .5s ease, opacity .5s ease; }
+.portal:hover .portal-icon { transform: rotate(0) scale(1.04); opacity: .14; }
+.portal-copy { position: relative; max-width: 500px; }
+.portal-kicker { display: block; color: rgba(242,228,198,.58); text-transform: uppercase; letter-spacing: .17em; font-size: .61rem; font-weight: 700; margin-bottom: 9px; }
+.portal h3 { margin: 0 0 10px; font-size: clamp(2rem, 4.2vw, 3.35rem); letter-spacing: -.035em; }
+.portal p { margin: 0 0 20px; color: rgba(239,233,222,.7); line-height: 1.58; max-width: 470px; }
+.visit { font-size: .78rem; color: rgba(248,237,211,.78); border-bottom: 1px solid rgba(248,237,211,.28); padding-bottom: 3px; }
+
+.chocolate::before { background: radial-gradient(circle at 80% 12%, rgba(105,70,60,.75), transparent 36%), linear-gradient(145deg, #271814, #120e10 68%); }
+.chocolate { box-shadow: inset 0 0 100px rgba(125,82,49,.08); }
+.yugen::before { background: radial-gradient(circle at 75% 12%, rgba(216,45,157,.29), transparent 32%), radial-gradient(circle at 15% 25%, rgba(35,160,209,.22), transparent 30%), linear-gradient(145deg, #161326, #0a1018 70%); }
+.shadows::before { background: radial-gradient(circle at 78% 12%, rgba(216,176,93,.28), transparent 26%), linear-gradient(145deg, #1b2728, #0b1013 68%); }
+.crochet::before { background: radial-gradient(circle at 78% 10%, rgba(158,105,84,.35), transparent 34%), linear-gradient(145deg, #31201d, #151113 70%); }
+.soap::before { background: radial-gradient(circle at 76% 12%, rgba(124,161,142,.28), transparent 32%), linear-gradient(145deg, #192422, #0d1213 70%); }
+.crafts::before { background: radial-gradient(circle at 76% 12%, rgba(180,136,69,.24), transparent 31%), linear-gradient(145deg, #29231c, #121112 70%); }
+.roo::before { background: radial-gradient(circle at 75% 8%, rgba(184,64,35,.3), transparent 32%), linear-gradient(145deg, #2d2017, #120f0d 72%); }
+.hikari::before { background: radial-gradient(circle at 76% 10%, rgba(124,108,189,.3), transparent 32%), radial-gradient(circle at 18% 30%, rgba(196,151,74,.15), transparent 25%), linear-gradient(145deg, #201c29, #0d0c12 70%); }
+
+.about, .contact {
+  width: min(var(--max), calc(100% - 36px));
+  margin: 0 auto;
+  padding: 100px 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 80px;
+  align-items: start;
+}
+.about > p { margin-top: 35px; font-size: 1.05rem; }
+.contact { align-items: end; }
+.contact .secondary-button { justify-self: end; margin-bottom: 10px; }
+
+footer {
+  width: min(var(--max), calc(100% - 36px));
+  margin: 0 auto;
+  min-height: 140px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #756f68;
+  font-size: .73rem;
+}
+.mirror { margin-left: auto; width: 28px; height: 34px; padding: 3px; border-radius: 48% 48% 45% 45%; border: 1px solid rgba(166,149,123,.35); background: #19181b; cursor: pointer; transform: rotate(-6deg); opacity: .55; transition: .25s ease; }
+.mirror:hover, .mirror:focus-visible { opacity: 1; transform: rotate(-2deg) scale(1.08); }
+.mirror-glass { display: block; width: 100%; height: 100%; border-radius: inherit; background: linear-gradient(135deg, #454653 0 31%, #17171b 31.5% 33%, #5d5b62 33.5% 56%, #17171b 56.5% 58%, #383943 58.5% 100%); position: relative; }
+.mirror-glass::after { content: ""; position: absolute; width: 1px; height: 70%; background: rgba(10,10,12,.9); left: 52%; top: 14%; transform: rotate(23deg); box-shadow: 7px 5px 0 rgba(10,10,12,.65), -5px 8px 0 rgba(10,10,12,.55); }
+.whisper { margin: 0; width: 0; max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: .45s ease; color: #8f8691; font-family: Georgia, serif; font-style: italic; }
+.whisper.show { width: auto; max-width: 280px; opacity: .8; }
+
+/* room pages */
+.room-body { min-height: 100vh; display: grid; place-items: center; background: radial-gradient(circle at top, #23212d, #0b0b10 58%); }
+.room-shell { width: min(760px, calc(100% - 38px)); text-align: center; padding: 70px 0; }
+.room-mark { font-size: 4rem; opacity: .7; }
+.room-title { margin: 10px 0 12px; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -.05em; }
+.room-copy { color: #aaa49b; line-height: 1.75; max-width: 620px; margin: 0 auto 28px; }
+
+@media (max-width: 780px) {
+  .site-header { padding: 18px 0; }
+  nav a:nth-child(2) { display: none; }
+  .hero { min-height: 770px; padding-top: 60px; }
+  .sigil { width: 120px; height: 120px; }
+  .portal { grid-column: span 12; min-height: 350px; padding: 24px; }
+  .about, .contact { grid-template-columns: 1fr; gap: 24px; padding: 72px 0; }
+  .about > p { margin-top: 0; }
+  .contact .secondary-button { justify-self: start; }
+  .moon { width: 330px; height: 330px; top: 130px; }
+  footer { flex-wrap: wrap; padding: 30px 0; }
+  .whisper.show { width: 100%; max-width: none; flex-basis: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+</style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="moon"></div>
+    <div class="mist mist-one"></div>
+    <div class="mist mist-two"></div>
+    <div class="ridge ridge-back"></div>
+    <div class="ridge ridge-front"></div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand-mini" href="#top" aria-label="Howling Moon Creations home">
+      <span class="brand-mark" aria-hidden="true">☾</span>
+      <span>HMC</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#worlds">Our Worlds</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="sigil" aria-hidden="true">
+        <svg viewBox="0 0 240 240" role="img">
+          <defs>
+            <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#e5d7b8"/>
+              <stop offset=".5" stop-color="#9d8b67"/>
+              <stop offset="1" stop-color="#d6c6a3"/>
+            </linearGradient>
+          </defs>
+          <circle cx="120" cy="120" r="93" fill="none" stroke="url(#metal)" stroke-width="2.2" opacity=".72"/>
+          <circle cx="120" cy="120" r="78" fill="none" stroke="url(#metal)" stroke-width="1" opacity=".35"/>
+          <path d="M151 55c-37 5-61 36-54 70 7 35 41 57 76 48-15 20-40 32-67 27-42-8-68-49-58-90 10-42 53-67 94-54 3 1 6 2 9 4z" fill="url(#metal)" opacity=".92"/>
+          <path d="M77 161c19-29 47-48 81-55-15 13-28 29-36 48 14-7 28-11 43-12-20 11-35 27-44 48-7-17-22-27-44-29z" fill="#0b0b10" stroke="url(#metal)" stroke-width="1.5"/>
+          <path d="M111 163c6-11 13-20 22-28-2 9-1 17 4 24-9-1-18 0-26 4z" fill="url(#metal)" opacity=".8"/>
+        </svg>
+      </div>
+      <p class="eyebrow">Welcome to the strange little universe of</p>
+      <h1>Howling Moon<br><span>Creations</span></h1>
+      <p class="tagline">Made by hand. Dreamed up after dark.</p>
+      <p class="intro">Chocolate, fiber, soap, music, folklore, games, and whatever wandered into the workshop after midnight.</p>
+      <a class="primary-button" href="#worlds">Choose a door <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section class="worlds" id="worlds">
+      <div class="section-heading">
+        <p class="eyebrow">One house. Many rooms.</p>
+        <h2>Come in. Wander around.</h2>
+        <p>Each part of Howling Moon has its own atmosphere. Pick whatever looks interesting and see where it leads.</p>
+      </div>
+
+      <div class="portal-grid">
+        <a class="portal chocolate" href="#chocolates">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">♜</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">The Confectionery</span>
+            <h3>Chocolates</h3>
+            <p>Small-batch sweets with Victorian, Celtic, and Nordic gothic bones.</p>
+            <span class="visit">Enter the shop →</span>
+          </div>
+        </a>
+
+        <a class="portal yugen" href="#yugen">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">狐</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">Neon stories after midnight</span>
+            <h3>YŪGEN</h3>
+            <p>A nine-tailed voice moving through neon, memory, mischief, and song.</p>
+            <span class="visit">Follow the foxfire →</span>
+          </div>
+        </a>
+
+        <a class="portal shadows" href="#shadows">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">♆</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">Leave lanterns, not scars</span>
+            <h3>Shadows &amp; Beacons</h3>
+            <p>Maine lore, forgotten places, old stones, strange stories, and respectful exploration.</p>
+            <span class="visit">Light a lantern →</span>
+          </div>
+        </a>
+
+        <a class="portal crochet" href="#crochet">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">✣</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">Made loop by loop</span>
+            <h3>Crochet</h3>
+            <p>Warm, tactile work from Karen’s hooks, hands, and formidable yarn stash.</p>
+            <span class="visit">See the stitches →</span>
+          </div>
+        </a>
+
+        <a class="portal soap" href="#soap">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">◌</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">Small-batch alchemy</span>
+            <h3>Soap</h3>
+            <p>Handmade bars, good scents, curious combinations, and no beige-corporate nonsense.</p>
+            <span class="visit">Wash up →</span>
+          </div>
+        </a>
+
+        <a class="portal crafts" href="#crafts">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">✦</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">The workbench</span>
+            <h3>Crafts</h3>
+            <p>Embroidery, baking crafts, experiments, and whatever else the machines learn to do.</p>
+            <span class="visit">Open the workshop →</span>
+          </div>
+        </a>
+
+        <a class="portal roo" href="#roo">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">♛</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">Feathers. Swagger. Poor decisions.</span>
+            <h3>Roo Rumble</h3>
+            <p>A ridiculous rooster universe where dignity is optional and the flock is judging you.</p>
+            <span class="visit">Enter the coop →</span>
+          </div>
+        </a>
+
+        <a class="portal hikari" href="#hikari">
+          <div class="portal-art" aria-hidden="true"><span class="portal-icon">燈</span></div>
+          <div class="portal-copy">
+            <span class="portal-kicker">A light left on in the back room</span>
+            <h3>Hikari’s Hideaway</h3>
+            <p>Curiosities, experiments, notes, tiny discoveries, and things that escaped the filing cabinet.</p>
+            <span class="visit">Mind the tails →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div>
+        <p class="eyebrow">About the house</p>
+        <h2>We make things because apparently leaving well enough alone was never an option.</h2>
+      </div>
+      <p>Howling Moon Creations is a home for handmade goods, creative projects, odd experiments, stories, music, and the occasional idea that got completely out of hand. Some things are practical. Some are beautiful. Some are weird on purpose.</p>
+    </section>
+
+    <section class="contact" id="contact">
+      <div>
+        <p class="eyebrow">Knock on the door</p>
+        <h2>Want to find us again?</h2>
+        <p>The proper contact details, shop links, and social links will live here once we wire them in.</p>
+      </div>
+      <a class="secondary-button" href="#top">Back to the moon ↑</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Howling Moon Creations</p>
+    <button class="mirror" id="mirror" type="button" aria-label="A small cracked mirror. Probably nothing.">
+      <span class="mirror-glass" aria-hidden="true"></span>
+    </button>
+    <p class="whisper" id="whisper" aria-live="polite"></p>
+  </footer>
+
+  <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const mirror = document.getElementById('mirror');
+const whisper = document.getElementById('whisper');
+let open = false;
+
+mirror.addEventListener('click', () => {
+  open = !open;
+  whisper.textContent = open ? 'Some reflections are better left broken.' : '';
+  whisper.classList.toggle('show', open);
+});
+
+</script>
+</body>
+</html>
