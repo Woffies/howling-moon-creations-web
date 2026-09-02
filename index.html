@@ -344,7 +344,7 @@ footer {
           </div>
         </a>
 
-        <a class="portal yugen" href="#" data-room="yugen">
+        <a class="portal yugen" href="yugen/" data-room="yugen">
           <div class="portal-art" aria-hidden="true"><span class="portal-icon">狐</span></div>
           <div class="portal-copy">
             <span class="portal-kicker">Neon stories after midnight</span>
@@ -562,6 +562,7 @@ const roomActions = document.getElementById('roomActions');
 
 document.querySelectorAll('[data-room]').forEach(card => {
   card.addEventListener('click', event => {
+    if (card.dataset.room === 'yugen') return;
     event.preventDefault();
     if (card.dataset.room === 'hikari') { openHideaway(); return; }
     const room = rooms[card.dataset.room];
