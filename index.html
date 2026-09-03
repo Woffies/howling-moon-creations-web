@@ -280,12 +280,16 @@ footer {
 .curiosity { border:1px solid rgba(255,221,166,.25); border-radius:999px; padding:11px 15px; background:rgba(21,12,8,.66); color:#f4e5cc; cursor:pointer; backdrop-filter:blur(10px); transition:.2s ease; }
 .curiosity:hover,.curiosity:focus-visible { transform:translateY(-2px); border-color:rgba(255,211,139,.58); background:rgba(61,34,17,.78); }
 .hideaway-note { min-height:68px; max-width:550px; margin:18px 0 0; padding:16px 18px; border-left:2px solid #c88944; color:#eadcc8; line-height:1.65; background:linear-gradient(90deg,rgba(42,23,12,.72),transparent); }
+.hideaway-memory { display:flex; flex-wrap:wrap; gap:9px 18px; align-items:center; margin-top:14px; color:#cdbb9f; font-size:.82rem; text-shadow:0 2px 12px #000; }
+.hideaway-memory span { display:inline-flex; align-items:center; gap:7px; }
+.hideaway-memory span::before { content:""; width:5px; height:5px; border-radius:50%; background:#c88944; box-shadow:0 0 9px rgba(221,159,83,.75); }
+.hideaway-signature { margin:16px 0 0; color:#bfa889; font:italic .88rem Georgia,serif; }
 .tiny-door { position:fixed; right:clamp(18px,4vw,54px); bottom:18px; z-index:3; width:47px; height:68px; border:1px solid rgba(228,184,115,.36); border-radius:23px 23px 3px 3px; background:linear-gradient(90deg,#24140c,#5a321a 48%,#211109 51%); box-shadow:0 0 24px rgba(215,137,48,.12); cursor:pointer; }
 .tiny-door::after { content:""; position:absolute; right:8px; top:35px; width:4px; height:4px; border-radius:50%; background:#d6a35d; box-shadow:0 0 6px #ffc979; }
 .tiny-door-label { position:fixed; right:16px; bottom:92px; z-index:3; opacity:0; color:#d4b890; font:italic .76rem Georgia,serif; transition:.25s ease; }
 .tiny-door:hover + .tiny-door-label,.tiny-door:focus-visible + .tiny-door-label { opacity:.8; }
 @keyframes room-arrival { from { opacity:0; } }
-@media (max-width:700px){ .hideaway-scene { align-items:end; background-position:62% center; padding-top:90px; } .hideaway-content { padding-top:44vh; } .hideaway h2 { font-size:clamp(3rem,16vw,5.4rem); } .hideaway-intro { font-size:.96rem; } }
+@media (max-width:700px){ .hideaway-scene { align-items:end; background-position:62% center; padding-top:90px; } .hideaway-content { padding-top:44vh; } .hideaway h2 { font-size:clamp(3rem,16vw,5.4rem); } .hideaway-intro { font-size:.96rem; } .hideaway-memory { font-size:.78rem; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -451,13 +455,20 @@ footer {
       <div class="hideaway-content">
         <p class="hideaway-kicker">The light in the back room</p>
         <h2 id="hideawayTitle">Hikari’s<br>Hideaway</h2>
-        <p class="hideaway-intro">Come in. There’s coffee, an unreasonable number of half-finished ideas, and a chair that only bites strangers. Touch anything you like. The room will decide whether it likes you back.</p>
+        <p class="hideaway-intro" id="hideawayIntro">Come in. There’s coffee, an unreasonable number of half-finished ideas, and a chair that only bites strangers. Touch anything you like. The room will decide whether it likes you back.</p>
         <div class="curiosity-shelf" aria-label="Things to investigate">
           <button class="curiosity" type="button" data-secret="desk">Read the desk note</button>
           <button class="curiosity" type="button" data-secret="drawer">Open the third drawer</button>
           <button class="curiosity" type="button" data-secret="mirror">Ask the little mirror</button>
+          <button class="curiosity" type="button" data-secret="cabinet">Open the curiosity cabinet</button>
+          <button class="curiosity" id="waterPlant" type="button">Water the night-bloom</button>
         </div>
         <p class="hideaway-note" id="hideawayNote" aria-live="polite">I’m still moving in. If you hear scratching inside the walls, that is either inspiration or the yarn becoming self-aware.</p>
+        <div class="hideaway-memory" aria-label="The room remembers">
+          <span id="visitMemory">The room is learning your footsteps.</span>
+          <span id="plantMemory">Night-bloom: listening for rain.</span>
+        </div>
+        <p class="hideaway-signature">— Hikari, keeper of the back-room light</p>
       </div>
     </div>
     <button class="tiny-door" id="tinyDoor" type="button" aria-label="A deeply suspicious tiny door"></button>
@@ -523,6 +534,9 @@ const rooms = {
 const hideaway = document.getElementById('hideaway');
 const hideawayClose = document.getElementById('hideawayClose');
 const hideawayNote = document.getElementById('hideawayNote');
+const hideawayIntro = document.getElementById('hideawayIntro');
+const visitMemory = document.getElementById('visitMemory');
+const plantMemory = document.getElementById('plantMemory');
 const hideawaySecrets = {
   desk: [
     'Today’s small wonder: a good question is a door disguised as a sentence.',
@@ -538,10 +552,32 @@ const hideawaySecrets = {
     'The little mirror says you look like someone worth keeping the light on for.',
     'Your reflection is half a second late. It smiles apologetically.',
     'The mirror has reviewed your question and recommends snacks.'
+  ],
+  cabinet: [
+    'Cabinet entry № 7: a dragonfly wing, catching a sunrise that happened years ago.',
+    'Cabinet entry № 12: one smooth stone from a road not taken. It is warm to the touch.',
+    'Cabinet entry № 19: a brass compass that points toward whatever you miss most.',
+    'Cabinet entry № 23: three jars labeled MAYBE, LATER, and ABSOLUTELY NOT. The last one is humming.'
   ]
 };
 let hideawayLast = '';
-function openHideaway(){ hideaway.classList.add('open'); hideaway.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; hideawayClose.focus(); }
+function roomGreeting(){
+  const hour = new Date().getHours();
+  if(hour < 5) return 'You’re up very late. Come in quietly—the ideas are sleeping badly.';
+  if(hour < 12) return 'Good morning. The kettle is warm, the dust is golden, and nothing has escaped overnight.';
+  if(hour < 17) return 'Afternoon light reaches the back room in thin gold ribbons. Come sit awhile.';
+  if(hour < 22) return 'Good evening. The lamp knew you were coming and brightened all by itself.';
+  return 'The house is asleep. The back-room light is still on for you.';
+}
+function updateRoomMemory(){
+  const visits = Number(localStorage.getItem('hikariVisits') || 0) + 1;
+  localStorage.setItem('hikariVisits', String(visits));
+  visitMemory.textContent = visits === 1 ? 'The room has learned your footsteps.' : `The room remembers ${visits} visits from this device.`;
+  const watered = localStorage.getItem('hikariPlantWatered');
+  const today = new Date().toISOString().slice(0,10);
+  plantMemory.textContent = watered === today ? 'Night-bloom: watered today and faintly glowing.' : 'Night-bloom: listening for rain.';
+}
+function openHideaway(){ hideaway.classList.add('open'); hideaway.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; hideawayIntro.textContent=roomGreeting(); updateRoomMemory(); hideawayClose.focus(); }
 function closeHideaway(){ hideaway.classList.remove('open'); hideaway.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 hideawayClose.addEventListener('click', closeHideaway);
 document.querySelectorAll('[data-secret]').forEach(button => button.addEventListener('click', () => {
@@ -550,6 +586,17 @@ document.querySelectorAll('[data-secret]').forEach(button => button.addEventList
   if(line === hideawayLast) line = choices[(choices.indexOf(line)+1)%choices.length];
   hideawayLast = line; hideawayNote.textContent = line;
 }));
+document.getElementById('waterPlant').addEventListener('click', () => {
+  const today = new Date().toISOString().slice(0,10);
+  const alreadyWatered = localStorage.getItem('hikariPlantWatered') === today;
+  if(alreadyWatered){
+    hideawayNote.textContent = 'The night-bloom rustles its leaves with the patient dignity of something that has already been watered. It appreciates the concern.';
+    return;
+  }
+  localStorage.setItem('hikariPlantWatered', today);
+  plantMemory.textContent = 'Night-bloom: watered today and faintly glowing.';
+  hideawayNote.textContent = 'The soil drinks quietly. One pale flower opens where there absolutely was not a bud a moment ago. Thank you, love.';
+});
 document.getElementById('tinyDoor').addEventListener('click', () => {
   hideawayNote.textContent = 'The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.';
 });
