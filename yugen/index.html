@@ -34,6 +34,7 @@
     img { display: block; max-width: 100%; }
     .skip { position: absolute; left: -999px; top: 0; }
     .skip:focus { left: 16px; top: 16px; z-index: 99; padding: 10px 14px; background: white; color: black; }
+
     .site-nav {
       position: fixed; inset: 0 0 auto; z-index: 20;
       display: flex; align-items: center; justify-content: space-between;
@@ -44,6 +45,7 @@
     .back { color: #d8cfdf; }
     .back:hover { color: white; }
     .nav-mark { color: var(--violet); font-weight: 800; }
+
     .hero {
       min-height: 100svh;
       display: grid;
@@ -62,24 +64,29 @@
     .kanji { display: block; margin: 20px 0 0; color: var(--gold); letter-spacing: .35em; font-family: Georgia, serif; font-size: 1rem; }
     .hero-line { max-width: 570px; margin: 34px 0 0; color: #c9c0d1; font: 400 clamp(1.2rem, 2vw, 1.75rem)/1.5 Georgia, serif; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 19px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; font-size: .76rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 19px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; font-size: .76rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
     .button.primary { border-color: transparent; color: #09070d; background: linear-gradient(110deg, var(--cyan), #e060ff 65%, var(--rose)); box-shadow: 0 10px 35px rgba(161, 59, 211, .25); }
     .button.secondary:hover { border-color: rgba(238, 232, 245, .5); background: rgba(255,255,255,.04); }
+
     .hero-art { position: relative; min-height: 680px; }
     .hero-art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, #08070c 0, transparent 28%), linear-gradient(0deg, #08070c 0, transparent 20%); pointer-events: none; }
     .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: saturate(.94) contrast(1.04); }
     .foxfire { position: absolute; z-index: 2; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 13px 5px rgba(84,216,255,.6); animation: drift 7s ease-in-out infinite alternate; }
-    .foxfire.one { left: 17%; bottom: 18%; } .foxfire.two { right: 13%; top: 22%; animation-delay: -3s; background: var(--violet); } .foxfire.three { right: 24%; bottom: 15%; animation-delay: -5s; }
+    .foxfire.one { left: 17%; bottom: 18%; }
+    .foxfire.two { right: 13%; top: 22%; animation-delay: -3s; background: var(--violet); }
+    .foxfire.three { right: 24%; bottom: 15%; animation-delay: -5s; }
     @keyframes drift { to { transform: translate(30px,-35px) scale(.7); opacity: .45; } }
+
     main section { width: min(1180px, calc(100% - 42px)); margin: 0 auto; }
     .manifesto { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(30px, 8vw, 120px); padding: clamp(80px, 11vw, 150px) 0; border-top: 1px solid var(--line); }
     .manifesto h2, .catalog h2, .listen h2 { margin: 0; font-size: clamp(3rem, 6vw, 6rem); line-height: .95; letter-spacing: -.045em; }
     .manifesto-copy { color: #bbb1c4; font-size: 1.05rem; line-height: 1.8; }
     .manifesto-copy p:first-child { margin-top: 0; color: #eee8f5; font: 400 clamp(1.25rem, 2.1vw, 1.8rem)/1.55 Georgia, serif; }
     .rule { margin-top: 26px; padding-left: 20px; border-left: 2px solid var(--violet); color: #e7d9ee; font-weight: 700; }
+
     .listen { padding: 0 0 clamp(90px, 12vw, 150px); }
     .section-top { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
-    .section-note { max-width: 420px; margin: 0; color: var(--muted); line-height: 1.65; }
+    .section-note { max-width: 430px; margin: 0; color: var(--muted); line-height: 1.65; }
     .players { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
     .track { position: relative; overflow: hidden; padding: clamp(26px, 4vw, 45px); border: 1px solid var(--line); border-radius: 24px; background: var(--panel); box-shadow: 0 22px 55px rgba(0,0,0,.25); }
     .track::after { content: ""; position: absolute; width: 220px; height: 220px; right: -80px; top: -90px; border-radius: 50%; background: var(--glow, var(--violet)); filter: blur(75px); opacity: .22; pointer-events: none; }
@@ -87,19 +94,60 @@
     .track h3 { position: relative; z-index: 1; margin: 14px 0 7px; font-size: clamp(2rem, 4vw, 3.4rem); }
     .track p { color: var(--muted); line-height: 1.6; min-height: 3.2em; }
     audio { position: relative; z-index: 1; width: 100%; margin-top: 12px; accent-color: var(--violet); }
+
     .catalog { padding: 0 0 clamp(100px, 13vw, 175px); }
     .album-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 40px; }
-    .album { position: relative; overflow: hidden; aspect-ratio: 1; border-radius: 14px; border: 1px solid var(--line); background: #16121d; }
+    .album {
+      position: relative; overflow: hidden; aspect-ratio: 1;
+      border-radius: 14px; border: 1px solid var(--line); background: #16121d;
+      cursor: pointer; isolation: isolate;
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+    .album:hover, .album:focus-visible { transform: translateY(-4px); border-color: rgba(199,76,255,.48); box-shadow: 0 18px 45px rgba(0,0,0,.35); outline: none; }
     .album img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease, filter .7s ease; }
-    .album:hover img { transform: scale(1.035); filter: brightness(.62); }
-    .album-info { position: absolute; inset: auto 0 0; padding: 55px 18px 18px; background: linear-gradient(transparent, rgba(5,4,8,.93)); transform: translateY(35%); transition: transform .4s ease; }
-    .album:hover .album-info { transform: translateY(0); }
+    .album:hover img, .album:focus-visible img { transform: scale(1.045); filter: brightness(.52); }
+    .album-info { position: absolute; z-index: 2; inset: auto 0 0; padding: 62px 18px 18px; background: linear-gradient(transparent, rgba(5,4,8,.95)); transform: translateY(28%); transition: transform .4s ease; }
+    .album:hover .album-info, .album:focus-visible .album-info { transform: translateY(0); }
     .album-info h3 { margin: 0 0 5px; font-size: 1.35rem; }
     .album-info span { color: #c8bdce; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
-    .temporary { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px; margin-bottom: 100px; padding: clamp(28px, 5vw, 55px); border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(120deg, rgba(66,26,79,.36), rgba(9,21,29,.45)); }
-    .temporary h2 { margin: 0 0 10px; font-size: clamp(2rem, 4vw, 3.5rem); }
-    .temporary p { margin: 0; color: var(--muted); line-height: 1.65; max-width: 680px; }
+    .album-visit { display: block; margin-top: 10px; color: var(--cyan) !important; font-size: .62rem !important; }
+
+    .elsewhere {
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px;
+      margin-bottom: 100px; padding: clamp(28px, 5vw, 55px);
+      border: 1px solid var(--line); border-radius: 22px;
+      background: linear-gradient(120deg, rgba(66,26,79,.36), rgba(9,21,29,.45));
+    }
+    .elsewhere h2 { margin: 0 0 10px; font-size: clamp(2rem, 4vw, 3.5rem); }
+    .elsewhere p { margin: 0; color: var(--muted); line-height: 1.65; max-width: 700px; }
+
+    .album-modal {
+      position: fixed; inset: 0; z-index: 90; display: none; place-items: center; padding: 22px;
+      background: rgba(4,3,8,.84); backdrop-filter: blur(14px);
+    }
+    .album-modal.open { display: grid; }
+    .album-dialog {
+      position: relative; width: min(820px, 100%); max-height: min(86vh, 760px); overflow: auto;
+      display: grid; grid-template-columns: minmax(220px,.8fr) 1.2fr; gap: clamp(24px,5vw,50px);
+      padding: clamp(22px,4vw,42px); border: 1px solid rgba(232,218,247,.2);
+      border-radius: 24px; background:
+        radial-gradient(circle at 86% 5%, rgba(199,76,255,.18), transparent 24rem),
+        #100c18;
+      box-shadow: 0 35px 110px rgba(0,0,0,.58);
+    }
+    .album-dialog img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); }
+    .album-dialog-copy { align-self: center; }
+    .album-dialog-copy h3 { margin: 8px 0 14px; font-size: clamp(2.4rem,6vw,4.5rem); line-height: .95; letter-spacing: -.04em; }
+    .album-dialog-copy p { color: #c2b8ca; line-height: 1.75; }
+    .album-dialog-close {
+      position: absolute; top: 12px; right: 12px; z-index: 3;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--line); background: rgba(8,7,12,.74); color: white; cursor: pointer;
+    }
+    .album-dialog-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
     footer { display: flex; justify-content: space-between; gap: 20px; padding: 28px clamp(20px, 4vw, 64px); border-top: 1px solid var(--line); color: #8f8598; font-size: .75rem; }
+
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
       .hero-copy { min-height: 80svh; padding-bottom: 80px; }
@@ -107,7 +155,10 @@
       .hero-art::before { background: linear-gradient(0deg, #08070c 0, transparent 28%), linear-gradient(180deg, #08070c 0, transparent 18%); }
       .manifesto { grid-template-columns: 1fr; }
       .album-grid { grid-template-columns: repeat(2, 1fr); }
+      .album-dialog { grid-template-columns: 1fr; width: min(560px,100%); }
+      .album-dialog img { width: min(300px,100%); margin-inline: auto; }
     }
+
     @media (max-width: 620px) {
       .site-nav { padding: 16px 18px; }
       .hero-copy { padding-inline: 22px; }
@@ -117,14 +168,20 @@
       .album-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
       .album-info { transform: none; padding: 45px 12px 12px; }
       .album-info h3 { font-size: 1rem; }
-      .temporary { grid-template-columns: 1fr; }
+      .album-visit { display: none; }
+      .elsewhere { grid-template-columns: 1fr; }
       footer { display: block; }
     }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to YŪGEN</a>
+
   <nav class="site-nav" aria-label="Site navigation">
     <a class="back" href="../">← Howling Moon Creations</a>
     <a class="nav-mark" href="#listen">Listen</a>
@@ -143,13 +200,18 @@
     </div>
     <div class="hero-art" aria-label="Portrait of YŪGEN, a kitsune musician lit by neon">
       <img src="assets/art/yugen-glamour.png" alt="YŪGEN wearing ornate black and red jewelry, fox ears, and luminous violet glasses.">
-      <span class="foxfire one" aria-hidden="true"></span><span class="foxfire two" aria-hidden="true"></span><span class="foxfire three" aria-hidden="true"></span>
+      <span class="foxfire one" aria-hidden="true"></span>
+      <span class="foxfire two" aria-hidden="true"></span>
+      <span class="foxfire three" aria-hidden="true"></span>
     </div>
   </header>
 
   <main id="main">
     <section class="manifesto" aria-labelledby="about-yugen">
-      <div><p class="kicker">The woman behind the songs</p><h2 id="about-yugen">Ancient first.<br>Modern second.</h2></div>
+      <div>
+        <p class="kicker">The woman behind the songs</p>
+        <h2 id="about-yugen">Ancient first.<br>Modern second.</h2>
+      </div>
       <div class="manifesto-copy">
         <p>YŪGEN is a roughly nine-hundred-year-old kitsune musician whose songs carry centuries of memory, folklore, teachers, lovers, strangers, and sounds the world forgot.</p>
         <p>She is not a modern singer borrowing antique instruments. She is an old musical consciousness using new machinery—equally at home with shamisen, torch jazz, telegraph clicks, foxfire, hard techno, and the far side of the moon.</p>
@@ -159,40 +221,204 @@
     </section>
 
     <section class="listen" id="listen" aria-labelledby="listen-title">
-      <div class="section-top"><div><p class="kicker">The door is open</p><h2 id="listen-title">Listen in her room.</h2></div><p class="section-note">These songs play directly from Howling Moon Creations. No outside platform required.</p></div>
+      <div class="section-top">
+        <div>
+          <p class="kicker">The door is open</p>
+          <h2 id="listen-title">Listen in her room.</h2>
+        </div>
+        <p class="section-note">A few songs live here directly. The records below open into the larger stories around them.</p>
+      </div>
+
       <div class="players">
         <article class="track" style="--glow:#bb42e5">
-          <span class="track-number">First encounter</span><h3>YŪGEN</h3><p>An introduction—or a piece of folklore she has decided not to correct.</p>
-          <audio controls preload="metadata"><source src="assets/audio/yugen.mp3" type="audio/mpeg">Your browser cannot play this song.</audio>
+          <span class="track-number">First encounter</span>
+          <h3>YŪGEN</h3>
+          <p>An introduction—or a piece of folklore she has decided not to correct.</p>
+          <audio controls preload="metadata">
+            <source src="assets/audio/yugen.mp3" type="audio/mpeg">
+            Your browser cannot play this song.
+          </audio>
         </article>
+
         <article class="track" style="--glow:#32c9fa">
-          <span class="track-number">Festival after midnight</span><h3>Neon Matsuri</h3><p>Old summer drums remembered beneath the pulse of a future underground.</p>
-          <audio controls preload="metadata"><source src="assets/audio/neon-matsuri.mp3" type="audio/mpeg">Your browser cannot play this song.</audio>
+          <span class="track-number">Festival after midnight</span>
+          <h3>Neon Matsuri</h3>
+          <p>Old summer drums remembered beneath the pulse of a future underground.</p>
+          <audio controls preload="metadata">
+            <source src="assets/audio/neon-matsuri.mp3" type="audio/mpeg">
+            Your browser cannot play this song.
+          </audio>
         </article>
       </div>
     </section>
 
     <section class="catalog" id="catalog" aria-labelledby="catalog-title">
-      <div class="section-top"><div><p class="kicker">Four doors into the archive</p><h2 id="catalog-title">The records.</h2></div><p class="section-note">Different centuries. Different moods. The same fox watching from the center of the storm.</p></div>
+      <div class="section-top">
+        <div>
+          <p class="kicker">Four doors into the archive</p>
+          <h2 id="catalog-title">The records.</h2>
+        </div>
+        <p class="section-note">Each record is a different window into the same long life. Open one and let her tell it her way.</p>
+      </div>
+
       <div class="album-grid">
-        <article class="album"><img loading="lazy" src="assets/art/the-long-way-here.jpg" alt="The Long Way Here album artwork featuring YŪGEN in a neon music studio."><div class="album-info"><h3>The Long Way Here</h3><span>The first telling</span></div></article>
-        <article class="album"><img loading="lazy" src="assets/art/a-thousand-faces.png" alt="A Thousand Faces album artwork showing many aspects of YŪGEN."><div class="album-info"><h3>A Thousand Faces</h3><span>Memory changes shape</span></div></article>
-        <article class="album"><img loading="lazy" src="assets/art/a-year-of-eternity.png" alt="A Year of Eternity album artwork showing YŪGEN surrounded by the seasons."><div class="album-info"><h3>A Year of Eternity</h3><span>Twelve months, one cycle</span></div></article>
-        <article class="album"><img loading="lazy" src="assets/art/you-are-never-alone.png" alt="You Are Never Alone album artwork featuring YŪGEN in a dark forest throne room."><div class="album-info"><h3>You Are Never Alone</h3><span>The forest is listening</span></div></article>
+        <article class="album" tabindex="0" role="button" data-album="long-way" aria-label="Open The Long Way Here">
+          <img loading="lazy" src="assets/art/the-long-way-here.jpg" alt="The Long Way Here album artwork featuring YŪGEN in a neon music studio.">
+          <div class="album-info">
+            <h3>The Long Way Here</h3>
+            <span>The first telling</span>
+            <span class="album-visit">Open the record →</span>
+          </div>
+        </article>
+
+        <article class="album" tabindex="0" role="button" data-album="thousand-faces" aria-label="Open A Thousand Faces">
+          <img loading="lazy" src="assets/art/a-thousand-faces.png" alt="A Thousand Faces album artwork showing many aspects of YŪGEN.">
+          <div class="album-info">
+            <h3>A Thousand Faces</h3>
+            <span>Memory changes shape</span>
+            <span class="album-visit">Open the record →</span>
+          </div>
+        </article>
+
+        <article class="album" tabindex="0" role="button" data-album="year-eternity" aria-label="Open A Year of Eternity">
+          <img loading="lazy" src="assets/art/a-year-of-eternity.png" alt="A Year of Eternity album artwork showing YŪGEN surrounded by the seasons.">
+          <div class="album-info">
+            <h3>A Year of Eternity</h3>
+            <span>Twelve months, one cycle</span>
+            <span class="album-visit">Open the record →</span>
+          </div>
+        </article>
+
+        <article class="album" tabindex="0" role="button" data-album="never-alone" aria-label="Open You Are Never Alone">
+          <img loading="lazy" src="assets/art/you-are-never-alone.png" alt="You Are Never Alone album artwork featuring YŪGEN in a dark forest throne room.">
+          <div class="album-info">
+            <h3>You Are Never Alone</h3>
+            <span>The forest is listening</span>
+            <span class="album-visit">Open the record →</span>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="temporary" aria-labelledby="elsewhere-title">
-      <div><p class="kicker">Elsewhere, for the moment</p><h2 id="elsewhere-title">The larger catalog is still on Bandcamp.</h2><p>While we bring more of YŪGEN's music home, the existing Bandcamp archive remains available as a temporary doorway.</p></div>
+    <section class="elsewhere" aria-labelledby="elsewhere-title">
+      <div>
+        <p class="kicker">Another doorway</p>
+        <h2 id="elsewhere-title">The fox wanders farther than one house.</h2>
+        <p>This is YŪGEN’s home at Howling Moon Creations. Bandcamp remains an outside archive for the wider catalog while her music continues to spread to other listening platforms.</p>
+      </div>
       <a class="button secondary" href="https://yugenwave.bandcamp.com/music" target="_blank" rel="noopener">Open Bandcamp ↗</a>
     </section>
   </main>
 
-  <footer><span>© <span id="year"></span> Howling Moon Creations</span><span>YŪGEN / 幽玄</span></footer>
+  <div class="album-modal" id="albumModal" aria-hidden="true">
+    <div class="album-dialog" role="dialog" aria-modal="true" aria-labelledby="albumModalTitle">
+      <button class="album-dialog-close" id="albumModalClose" type="button" aria-label="Close album details">×</button>
+      <img id="albumModalArt" src="" alt="">
+      <div class="album-dialog-copy">
+        <p class="kicker" id="albumModalKicker">From the archive</p>
+        <h3 id="albumModalTitle"></h3>
+        <p id="albumModalCopy"></p>
+        <div class="album-dialog-actions">
+          <a class="button primary" href="https://yugenwave.bandcamp.com/music" target="_blank" rel="noopener">Listen on Bandcamp ↗</a>
+          <button class="button secondary" id="albumModalBack" type="button">Back to the records</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© <span id="year"></span> Howling Moon Creations</span>
+    <span>YŪGEN / 幽玄</span>
+  </footer>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
     const players = [...document.querySelectorAll('audio')];
-    players.forEach(player => player.addEventListener('play', () => players.forEach(other => { if (other !== player) other.pause(); })));
+    players.forEach(player => player.addEventListener('play', () => {
+      players.forEach(other => { if (other !== player) other.pause(); });
+    }));
+
+    const albums = {
+      'long-way': {
+        title: 'The Long Way Here',
+        kicker: 'The first telling',
+        art: 'assets/art/the-long-way-here.jpg',
+        alt: 'The Long Way Here album artwork featuring YŪGEN in a neon music studio.',
+        copy: 'The door opens on the woman herself: ancient memory carried into modern sound. These are introductions, old stories retold under electric light, bits of mischief, tenderness, and the first sense that nine centuries have left her with far too much to say.'
+      },
+      'thousand-faces': {
+        title: 'A Thousand Faces',
+        kicker: 'Memory changes shape',
+        art: 'assets/art/a-thousand-faces.png',
+        alt: 'A Thousand Faces album artwork showing many aspects of YŪGEN.',
+        copy: 'Identity is rarely one clean thing after nine hundred years. This record leans into masks, moods, old selves, new selves, humor, danger, and the strange freedom of becoming someone different without ceasing to be the same fox underneath.'
+      },
+      'year-eternity': {
+        title: 'A Year of Eternity',
+        kicker: 'Twelve months, one cycle',
+        art: 'assets/art/a-year-of-eternity.png',
+        alt: 'A Year of Eternity album artwork showing YŪGEN surrounded by the seasons.',
+        copy: 'Twelve months are a small thing to someone who has watched centuries turn, but a year still has weight. Seasons arrive, vanish, and return; festivals glow; winter remembers; spring forgives. YŪGEN walks the whole circle and notices what mortals hurry past.'
+      },
+      'never-alone': {
+        title: 'You Are Never Alone',
+        kicker: 'The forest is listening',
+        art: 'assets/art/you-are-never-alone.png',
+        alt: 'You Are Never Alone album artwork featuring YŪGEN in a dark forest throne room.',
+        copy: 'Not every presence in the dark is a threat, and not every kind of company announces itself. These songs are encounters: strangers, spirits, animals, memories, watchers, and the quiet suggestion that solitude may be less empty than it first appears.'
+      }
+    };
+
+    const modal = document.getElementById('albumModal');
+    const modalClose = document.getElementById('albumModalClose');
+    const modalBack = document.getElementById('albumModalBack');
+    const modalArt = document.getElementById('albumModalArt');
+    const modalTitle = document.getElementById('albumModalTitle');
+    const modalKicker = document.getElementById('albumModalKicker');
+    const modalCopy = document.getElementById('albumModalCopy');
+    let lastAlbumTrigger = null;
+
+    function openAlbum(card) {
+      const album = albums[card.dataset.album];
+      if (!album) return;
+      lastAlbumTrigger = card;
+      modalArt.src = album.art;
+      modalArt.alt = album.alt;
+      modalTitle.textContent = album.title;
+      modalKicker.textContent = album.kicker;
+      modalCopy.textContent = album.copy;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
+    function closeAlbum() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastAlbumTrigger) lastAlbumTrigger.focus();
+    }
+
+    document.querySelectorAll('[data-album]').forEach(card => {
+      card.addEventListener('click', () => openAlbum(card));
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openAlbum(card);
+        }
+      });
+    });
+
+    modalClose.addEventListener('click', closeAlbum);
+    modalBack.addEventListener('click', closeAlbum);
+    modal.addEventListener('click', event => {
+      if (event.target === modal) closeAlbum();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && modal.classList.contains('open')) closeAlbum();
+    });
   </script>
 </body>
 </html>
