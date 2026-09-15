@@ -316,8 +316,17 @@
       hideawayNote.textContent = 'The soil drinks quietly. One pale flower opens where there absolutely was not a bud a moment ago. Thank you, love.';
     });
 
+    const tinyDoorReplies = [
+      'The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.',
+      'A folded note slips under the door: “Out collecting crumbs. Please leave any unusually small adventures on the mat.”',
+      'Three tiny knocks answer yours. A fourth arrives late, followed by a whispered argument about rehearsal.',
+      'The door opens just enough for a thimble-sized cup of coffee. A voice says, “Hikari gets the good cup. You may borrow this one.”'
+    ];
+    let tinyDoorVisit = 0;
+
     document.getElementById('tinyDoor').addEventListener('click', () => {
-      hideawayNote.textContent = 'The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.';
+      hideawayNote.textContent = tinyDoorReplies[tinyDoorVisit];
+      tinyDoorVisit = (tinyDoorVisit + 1) % tinyDoorReplies.length;
     });
 
     hideawayIntro.textContent = roomGreeting();
