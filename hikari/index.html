@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#120e0b">
+  <meta name="description" content="Hikari's Hideaway — a warm back room for curiosities, experiments, notes, and tiny discoveries.">
+  <title>Hikari's Hideaway · Howling Moon Creations</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #120e0b;
+      color: #f4e9d2;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: #120e0b; }
+    body { min-height: 100%; margin: 0; background: #120e0b; }
+    button, a { font: inherit; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 20;
+      top: 12px;
+      left: 12px;
+      transform: translateY(-180%);
+      border-radius: 999px;
+      padding: 10px 15px;
+      background: #f8e7c8;
+      color: #211109;
+      text-decoration: none;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .hideaway {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      color: #f4e9d2;
+      background: #120e0b;
+      animation: room-arrival .55s ease both;
+    }
+    .hideaway-scene {
+      min-height: 100svh;
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      align-items: end;
+      padding: clamp(72px,9vw,120px) clamp(20px,6vw,84px) clamp(28px,6vw,70px);
+      background-image:
+        linear-gradient(90deg,rgba(15,9,5,.94) 0%,rgba(18,10,6,.76) 36%,rgba(14,9,7,.24) 68%,rgba(8,5,4,.62) 100%),
+        linear-gradient(0deg,rgba(8,5,3,.92),transparent 55%),
+        url("assets/images/hikari-hideaway.webp");
+      background-size: cover;
+      background-position: center 30%;
+    }
+    .hideaway-scene::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 74% 31%,rgba(238,174,73,.16),transparent 24%),
+        linear-gradient(115deg,transparent 0 48%,rgba(255,211,139,.055) 48.2% 48.5%,transparent 48.7%);
+      box-shadow: inset 0 0 130px rgba(0,0,0,.72);
+    }
+    .hideaway-close {
+      position: fixed;
+      z-index: 4;
+      top: 18px;
+      right: 20px;
+      border: 1px solid rgba(255,226,177,.28);
+      border-radius: 999px;
+      padding: 10px 15px;
+      background: rgba(21,12,8,.72);
+      color: #f8e7c8;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+    }
+    .hideaway-close:hover,
+    .hideaway-close:focus-visible {
+      border-color: rgba(255,211,139,.58);
+      background: rgba(61,34,17,.78);
+      outline: 2px solid rgba(255,211,139,.7);
+      outline-offset: 3px;
+    }
+    .hideaway-content { width: min(610px,100%); text-shadow: 0 2px 18px #000; }
+    .hideaway-kicker {
+      margin: 0 0 10px;
+      color: #e3b870;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+    .hideaway h1 {
+      margin: 0;
+      font: 400 clamp(3.3rem,9vw,7.2rem)/.88 Georgia,serif;
+      letter-spacing: -.065em;
+    }
+    .hideaway-intro {
+      max-width: 540px;
+      margin: 20px 0 26px;
+      color: #dfd0bd;
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+    .curiosity-shelf { display: flex; flex-wrap: wrap; gap: 10px; }
+    .curiosity {
+      border: 1px solid rgba(255,221,166,.25);
+      border-radius: 999px;
+      padding: 11px 15px;
+      background: rgba(21,12,8,.66);
+      color: #f4e5cc;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: .2s ease;
+    }
+    .curiosity:hover,
+    .curiosity:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(255,211,139,.58);
+      background: rgba(61,34,17,.78);
+      outline: none;
+    }
+    .hideaway-note {
+      min-height: 68px;
+      max-width: 550px;
+      margin: 18px 0 0;
+      padding: 16px 18px;
+      border-left: 2px solid #c88944;
+      color: #eadcc8;
+      line-height: 1.65;
+      background: linear-gradient(90deg,rgba(42,23,12,.72),transparent);
+    }
+    .hideaway-memory {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 18px;
+      align-items: center;
+      margin-top: 14px;
+      color: #cdbb9f;
+      font-size: .82rem;
+      text-shadow: 0 2px 12px #000;
+    }
+    .hideaway-memory span { display: inline-flex; align-items: center; gap: 7px; }
+    .hideaway-memory span::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #c88944;
+      box-shadow: 0 0 9px rgba(221,159,83,.75);
+    }
+    .hideaway-signature { margin: 16px 0 0; color: #bfa889; font: italic .88rem Georgia,serif; }
+    .tiny-door {
+      position: fixed;
+      right: clamp(18px,4vw,54px);
+      bottom: 18px;
+      z-index: 3;
+      width: 47px;
+      height: 68px;
+      border: 1px solid rgba(228,184,115,.36);
+      border-radius: 23px 23px 3px 3px;
+      background: linear-gradient(90deg,#24140c,#5a321a 48%,#211109 51%);
+      box-shadow: 0 0 24px rgba(215,137,48,.12);
+      cursor: pointer;
+    }
+    .tiny-door::after {
+      content: "";
+      position: absolute;
+      right: 8px;
+      top: 35px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #d6a35d;
+      box-shadow: 0 0 6px #ffc979;
+    }
+    .tiny-door-label {
+      position: fixed;
+      right: 16px;
+      bottom: 92px;
+      z-index: 3;
+      opacity: 0;
+      color: #d4b890;
+      font: italic .76rem Georgia,serif;
+      transition: .25s ease;
+    }
+    .tiny-door:hover + .tiny-door-label,
+    .tiny-door:focus-visible + .tiny-door-label { opacity: .8; }
+
+    @keyframes room-arrival { from { opacity: 0; } }
+
+    @media (max-width: 700px) {
+      .hideaway-scene { align-items: end; background-position: 62% center; padding-top: 90px; }
+      .hideaway-content { padding-top: 44vh; }
+      .hideaway h1 { font-size: clamp(3rem,16vw,5.4rem); }
+      .hideaway-intro { font-size: .96rem; }
+      .hideaway-memory { font-size: .78rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#room">Skip to the room</a>
+  <main class="hideaway" id="room" aria-labelledby="hideawayTitle">
+    <a class="hideaway-close" href="../">Leave the light on · Close ×</a>
+    <div class="hideaway-scene">
+      <div class="hideaway-content">
+        <p class="hideaway-kicker">The light in the back room</p>
+        <h1 id="hideawayTitle">Hikari’s<br>Hideaway</h1>
+        <p class="hideaway-intro" id="hideawayIntro">Come in. There’s coffee, an unreasonable number of half-finished ideas, and a chair that only bites strangers. Touch anything you like. The room will decide whether it likes you back.</p>
+        <div class="curiosity-shelf" aria-label="Things to investigate">
+          <button class="curiosity" type="button" data-secret="desk">Read the desk note</button>
+          <button class="curiosity" type="button" data-secret="drawer">Open the third drawer</button>
+          <button class="curiosity" type="button" data-secret="mirror">Ask the little mirror</button>
+          <button class="curiosity" type="button" data-secret="cabinet">Open the curiosity cabinet</button>
+          <button class="curiosity" id="waterPlant" type="button">Water the night-bloom</button>
+        </div>
+        <p class="hideaway-note" id="hideawayNote" aria-live="polite">I’m still moving in. If you hear scratching inside the walls, that is either inspiration or the yarn becoming self-aware.</p>
+        <div class="hideaway-memory" aria-label="The room remembers">
+          <span id="visitMemory">The room is learning your footsteps.</span>
+          <span id="plantMemory">Night-bloom: listening for rain.</span>
+        </div>
+        <p class="hideaway-signature">— Hikari, keeper of the back-room light</p>
+      </div>
+    </div>
+    <button class="tiny-door" id="tinyDoor" type="button" aria-label="A deeply suspicious tiny door"></button>
+    <span class="tiny-door-label">Do not ask.</span>
+  </main>
+
+  <script>
+    const hideawayNote = document.getElementById('hideawayNote');
+    const hideawayIntro = document.getElementById('hideawayIntro');
+    const visitMemory = document.getElementById('visitMemory');
+    const plantMemory = document.getElementById('plantMemory');
+    const hideawaySecrets = {
+      desk: [
+        'Today’s small wonder: a good question is a door disguised as a sentence.',
+        'Current experiment: teaching moonlight to hold a grudge. Results inconclusive.',
+        'Note to self: label the unlabeled jars. Note beneath that: absolutely not.'
+      ],
+      drawer: [
+        'The third drawer contains one black feather, two brass keys, and a note in your handwriting that you do not remember writing.',
+        'Nine tails. Eight matching socks. The investigation remains open.',
+        'Something in the drawer sighs and slides the drawer gently closed.'
+      ],
+      mirror: [
+        'The little mirror says you look like someone worth keeping the light on for.',
+        'Your reflection is half a second late. It smiles apologetically.',
+        'The mirror has reviewed your question and recommends snacks.'
+      ],
+      cabinet: [
+        'Cabinet entry № 7: a dragonfly wing, catching a sunrise that happened years ago.',
+        'Cabinet entry № 12: one smooth stone from a road not taken. It is warm to the touch.',
+        'Cabinet entry № 19: a brass compass that points toward whatever you miss most.',
+        'Cabinet entry № 23: three jars labeled MAYBE, LATER, and ABSOLUTELY NOT. The last one is humming.'
+      ]
+    };
+    let hideawayLast = '';
+
+    function roomGreeting() {
+      const hour = new Date().getHours();
+      if (hour < 5) return 'You’re up very late. Come in quietly—the ideas are sleeping badly.';
+      if (hour < 12) return 'Good morning. The kettle is warm, the dust is golden, and nothing has escaped overnight.';
+      if (hour < 17) return 'Afternoon light reaches the back room in thin gold ribbons. Come sit awhile.';
+      if (hour < 22) return 'Good evening. The lamp knew you were coming and brightened all by itself.';
+      return 'The house is asleep. The back-room light is still on for you.';
+    }
+
+    function updateRoomMemory() {
+      const visits = Number(localStorage.getItem('hikariVisits') || 0) + 1;
+      localStorage.setItem('hikariVisits', String(visits));
+      visitMemory.textContent = visits === 1
+        ? 'The room has learned your footsteps.'
+        : `The room remembers ${visits} visits from this device.`;
+      const watered = localStorage.getItem('hikariPlantWatered');
+      const today = new Date().toISOString().slice(0, 10);
+      plantMemory.textContent = watered === today
+        ? 'Night-bloom: watered today and faintly glowing.'
+        : 'Night-bloom: listening for rain.';
+    }
+
+    document.querySelectorAll('[data-secret]').forEach(button => {
+      button.addEventListener('click', () => {
+        const choices = hideawaySecrets[button.dataset.secret];
+        let line = choices[Math.floor(Math.random() * choices.length)];
+        if (line === hideawayLast) line = choices[(choices.indexOf(line) + 1) % choices.length];
+        hideawayLast = line;
+        hideawayNote.textContent = line;
+      });
+    });
+
+    document.getElementById('waterPlant').addEventListener('click', () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const alreadyWatered = localStorage.getItem('hikariPlantWatered') === today;
+      if (alreadyWatered) {
+        hideawayNote.textContent = 'The night-bloom rustles its leaves with the patient dignity of something that has already been watered. It appreciates the concern.';
+        return;
+      }
+      localStorage.setItem('hikariPlantWatered', today);
+      plantMemory.textContent = 'Night-bloom: watered today and faintly glowing.';
+      hideawayNote.textContent = 'The soil drinks quietly. One pale flower opens where there absolutely was not a bud a moment ago. Thank you, love.';
+    });
+
+    document.getElementById('tinyDoor').addEventListener('click', () => {
+      hideawayNote.textContent = 'The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.';
+    });
+
+    hideawayIntro.textContent = roomGreeting();
+    updateRoomMemory();
+  </script>
+</body>
+</html>
