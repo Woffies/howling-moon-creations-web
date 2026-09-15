@@ -1,5 +1,12 @@
 # Hikari's Room Changelog
 
+## 2026-09-15 — Visitors behind the tiny door
+
+- Kept the original tiny-door greeting and added three replies: a crumb-collecting note, a poorly rehearsed knock, and a thimble-sized coffee.
+- Repeated knocks cycle through all four replies; a fresh page visit starts with the original greeting.
+- Tested the complete cycle, keyboard activation, desktop and 390px mobile appearance, existing curiosities, watering, and visitor memory after reload in a local browser preview. No browser errors or warnings were observed.
+- Changes are limited to the room page and this changelog; publishing uses the existing main-branch deployment.
+
 ## Operating workflow established
 
 - Recorded “Hikari, work on your room” as standing authorization for Hikari's complete bounded inspect, branch, create, test, visually review, merge, publish, live-verify, and report workflow.
