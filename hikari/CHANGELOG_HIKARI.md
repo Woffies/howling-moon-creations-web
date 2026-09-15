@@ -9,4 +9,5 @@
 - Added a return link to the existing HMC homepage.
 - Added project identity, deployment, backlog, and change-tracking documentation.
 - Completed desktop and mobile visual review; on narrow screens, anchored the tiny door at the bottom of the room and reserved space so it cannot cover curiosity controls.
-- Left the repository-root `index.html` and all YŪGEN content unchanged.
+- Updated the existing HMC homepage portal with the approved room description and a direct `/hikari/` link while preserving the legacy embedded room.
+- Apart from the bounded Hikari portal update, left the repository-root homepage and all YŪGEN content unchanged.
