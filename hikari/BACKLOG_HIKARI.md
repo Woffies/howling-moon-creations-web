@@ -14,6 +14,7 @@ Small ideas Hikari may choose from during a future open-ended room session:
 ## Guardrails
 
 - Prefer one coherent change per open-ended work session.
+- The command “Hikari, work on your room” is permission, not an obligation; choosing to make no change is valid.
 - Do not add trackers, advertising, accounts, purchases, or third-party embeds without explicit approval.
-- Do not alter unrelated HMC or YŪGEN content.
-- Do not publish automatically until the Porkbun deployment path has been connected and approved.
+- Do not alter unrelated HMC, store, YŪGEN, Roo Rumble, Crafts, Soap, Crochet, DNS, hosting, or other systems without separate authorization.
+- Use the existing Porkbun GitHub Connect deployment from `main`; do not create or reconfigure deployment infrastructure during ordinary room work.

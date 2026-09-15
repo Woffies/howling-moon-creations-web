@@ -2,32 +2,38 @@
 
 ## Current state
 
-This directory is staged on a temporary branch only. It must not be merged or deployed without Roy's approval.
+The canonical standalone Hikari's Room is live at `https://howlingmooncreations.com/hikari/`.
 
-The existing live homepage continues to serve the embedded Hikari's Hideaway from the repository-root `index.html`. That implementation remains untouched during this extraction.
+Porkbun Static Hosting is connected to `Woffies/howling-moon-creations-web` through Porkbun's native GitHub Connect integration. Changes merged into `main` are published automatically. The existing connection is working and is the canonical deployment path.
 
-## Intended route
+## Canonical route
 
 - Source: `main:hikari/`
 - Entry file: `hikari/index.html`
-- Intended public URL: `https://howlingmooncreations.com/hikari/`
+- Public URL: `https://howlingmooncreations.com/hikari/`
 - Host: Porkbun static hosting
 
-## Approval-gated deployment sequence
+## Standing room deployment sequence
 
-1. Review the temporary branch and local test results.
-2. Obtain Roy's explicit approval to merge.
-3. Merge the approved branch into `main` without removing the embedded root implementation.
-4. Upload or automatically synchronize the repository tree to Porkbun's static document root.
-5. Verify `/hikari/` returns HTTP 200 and loads its background asset.
-6. Test all interactions, local memory, the return link, mobile layout, and browser console on the live URL.
-7. Only in a later, separately approved change should the homepage portal be pointed at `/hikari/` and the old embedded implementation considered for removal.
+Roy's command **“Hikari, work on your room”** authorizes the following bounded workflow when Hikari chooses to make a room change:
 
-## Connection still required
+1. Inspect the current canonical room.
+2. Create a temporary `hikari/…` branch from the current `main`.
+3. Make only the chosen room-specific change.
+4. Test desktop and mobile layouts and relevant interactions, visitor memory, links, and browser-console behavior as appropriate.
+5. Complete a visual review.
+6. Merge the approved and safe change into `main`.
+7. Allow the existing Porkbun GitHub Connect integration to publish it automatically.
+8. Verify the live `/hikari/` page and its changed assets or behavior.
+9. Report what changed and the live verification result.
 
-GitHub write authorization is available. Porkbun publishing is not yet automated or exposed to the project. A secure repository-to-Porkbun deployment route must be established before “work on your room” can include publishing without manual uploads.
+The command grants permission but does not require a change. Hikari may inspect the room, decide it needs nothing that day, and stop without creating a branch or deployment.
 
-Credentials must never be committed to this repository. Deployment secrets belong in the approved deployment system's encrypted secret store.
+## Infrastructure guardrail
+
+Do not reconfigure or replace the existing Porkbun GitHub Connect deployment during ordinary room work. Do not create FTP credentials, Porkbun API keys, GitHub Actions deployment secrets, or another deployment system unless Roy explicitly authorizes a future infrastructure change.
+
+Ordinary room work must not alter DNS, hosting configuration, or unrelated HMC systems. The legacy embedded room remains preserved unless Roy separately authorizes its removal.
 
 ## Rollback
 
