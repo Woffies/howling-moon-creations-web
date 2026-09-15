@@ -195,11 +195,18 @@
     @keyframes room-arrival { from { opacity: 0; } }
 
     @media (max-width: 700px) {
-      .hideaway-scene { align-items: end; background-position: 62% center; padding-top: 90px; }
+      .hideaway-scene {
+        align-items: end;
+        background-position: 62% center;
+        padding-top: 90px;
+        padding-bottom: 120px;
+      }
       .hideaway-content { padding-top: 44vh; }
       .hideaway h1 { font-size: clamp(3rem,16vw,5.4rem); }
       .hideaway-intro { font-size: .96rem; }
       .hideaway-memory { font-size: .78rem; }
+      .tiny-door,
+      .tiny-door-label { position: absolute; }
     }
 
     @media (prefers-reduced-motion: reduce) {
