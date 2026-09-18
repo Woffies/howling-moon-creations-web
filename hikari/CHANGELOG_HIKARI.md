@@ -1,5 +1,12 @@
 # Hikari's Room Changelog
 
+## 2026-09-18 — The night-bloom chooses a mood
+
+- Let the night-bloom develop one of four quiet daily bloom moods after watering: silver, violet, amber, or blue-white.
+- The day's bloom is deterministic and persists with the existing local daily watering memory; repeat watering keeps the same bloom instead of rerolling it.
+- Added a tiny matching glow to the plant-memory marker and switched the daily stamp to the visitor's local calendar day.
+- Change is bounded to Hikari's Room and uses no new assets, services, trackers, or infrastructure.
+
 ## 2026-09-15 — Visitors behind the tiny door
 
 - Kept the original tiny-door greeting and added three replies: a crumb-collecting note, a poorly rehearsed knock, and a thimble-sized coffee.

@@ -154,6 +154,10 @@
       background: #c88944;
       box-shadow: 0 0 9px rgba(221,159,83,.75);
     }
+    #plantMemory[data-bloom="silver"]::before { background: #d8d6c9; box-shadow: 0 0 10px rgba(232,231,216,.82); }
+    #plantMemory[data-bloom="violet"]::before { background: #b79ad8; box-shadow: 0 0 10px rgba(183,154,216,.8); }
+    #plantMemory[data-bloom="amber"]::before { background: #e0a25c; box-shadow: 0 0 10px rgba(224,162,92,.82); }
+    #plantMemory[data-bloom="blue"]::before { background: #8caac7; box-shadow: 0 0 10px rgba(140,170,199,.82); }
     .hideaway-signature { margin: 16px 0 0; color: #bfa889; font: italic .88rem Georgia,serif; }
     .tiny-door {
       position: fixed;
@@ -281,6 +285,30 @@
       return 'The house is asleep. The back-room light is still on for you.';
     }
 
+    const bloomMoods = [
+      { name: 'silver', memory: 'Night-bloom: silver petals open toward the quietest corner.', note: 'The soil drinks quietly. A silver flower unfolds like a small moon remembering how to shine.' },
+      { name: 'violet', memory: 'Night-bloom: violet at the edges and apparently plotting.', note: 'The soil drinks quietly. Violet gathers along the petals. The plant looks pleased with itself, which is concerning.' },
+      { name: 'amber', memory: 'Night-bloom: amber-hearted and warm as lamplight.', note: 'The soil drinks quietly. An amber glow wakes at the flower’s center, as if the back-room lamp taught it a trick.' },
+      { name: 'blue', memory: 'Night-bloom: blue-white and dreaming of rain.', note: 'The soil drinks quietly. One blue-white blossom opens and gives the distinct impression that it has been expecting you.' }
+    ];
+
+    function localDayStamp() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function bloomForDay(day) {
+      const number = Number(day.replaceAll('-', ''));
+      return bloomMoods[number % bloomMoods.length];
+    }
+
+    function showBloomMood(day) {
+      const bloom = bloomForDay(day);
+      plantMemory.dataset.bloom = bloom.name;
+      plantMemory.textContent = bloom.memory;
+      return bloom;
+    }
+
     function updateRoomMemory() {
       const visits = Number(localStorage.getItem('hikariVisits') || 0) + 1;
       localStorage.setItem('hikariVisits', String(visits));
@@ -288,10 +316,12 @@
         ? 'The room has learned your footsteps.'
         : `The room remembers ${visits} visits from this device.`;
       const watered = localStorage.getItem('hikariPlantWatered');
-      const today = new Date().toISOString().slice(0, 10);
-      plantMemory.textContent = watered === today
-        ? 'Night-bloom: watered today and faintly glowing.'
-        : 'Night-bloom: listening for rain.';
+      const today = localDayStamp();
+      if (watered === today) showBloomMood(today);
+      else {
+        delete plantMemory.dataset.bloom;
+        plantMemory.textContent = 'Night-bloom: listening for rain.';
+      }
     }
 
     document.querySelectorAll('[data-secret]').forEach(button => {
@@ -305,15 +335,16 @@
     });
 
     document.getElementById('waterPlant').addEventListener('click', () => {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = localDayStamp();
       const alreadyWatered = localStorage.getItem('hikariPlantWatered') === today;
       if (alreadyWatered) {
-        hideawayNote.textContent = 'The night-bloom rustles its leaves with the patient dignity of something that has already been watered. It appreciates the concern.';
+        const bloom = showBloomMood(today);
+        hideawayNote.textContent = `The ${bloom.name} night-bloom rustles its leaves with the patient dignity of something already watered. It appreciates the concern.`;
         return;
       }
       localStorage.setItem('hikariPlantWatered', today);
-      plantMemory.textContent = 'Night-bloom: watered today and faintly glowing.';
-      hideawayNote.textContent = 'The soil drinks quietly. One pale flower opens where there absolutely was not a bud a moment ago. Thank you, love.';
+      const bloom = showBloomMood(today);
+      hideawayNote.textContent = bloom.note + ' Thank you, love.';
     });
 
     const tinyDoorReplies = [
