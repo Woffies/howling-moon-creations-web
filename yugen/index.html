@@ -319,7 +319,7 @@
         <h3 id="albumModalTitle"></h3>
         <p id="albumModalCopy"></p>
         <div class="album-dialog-actions">
-          <a class="button primary" href="https://yugenwave.bandcamp.com/music" target="_blank" rel="noopener">Listen on Bandcamp ↗</a>
+          <a class="button primary" id="albumModalListen" href="https://yugenwave.bandcamp.com/music" target="_blank" rel="noopener">Listen on Bandcamp ↗</a>
           <button class="button secondary" id="albumModalBack" type="button">Back to the records</button>
         </div>
       </div>
@@ -366,7 +366,8 @@
         kicker: 'The forest is listening',
         art: 'assets/art/you-are-never-alone.png',
         alt: 'You Are Never Alone album artwork featuring YŪGEN in a dark forest throne room.',
-        copy: 'Not every presence in the dark is a threat, and not every kind of company announces itself. These songs are encounters: strangers, spirits, animals, memories, watchers, and the quiet suggestion that solitude may be less empty than it first appears.'
+        copy: 'Not every presence in the dark is a threat, and not every kind of company announces itself. These songs are encounters: strangers, spirits, animals, memories, watchers, and the quiet suggestion that solitude may be less empty than it first appears.',
+        url: 'https://yugenwave.bandcamp.com/album/you-are-never-alone'
       }
     };
 
@@ -377,6 +378,7 @@
     const modalTitle = document.getElementById('albumModalTitle');
     const modalKicker = document.getElementById('albumModalKicker');
     const modalCopy = document.getElementById('albumModalCopy');
+    const modalListen = document.getElementById('albumModalListen');
     let lastAlbumTrigger = null;
 
     function openAlbum(card) {
@@ -388,6 +390,7 @@
       modalTitle.textContent = album.title;
       modalKicker.textContent = album.kicker;
       modalCopy.textContent = album.copy;
+      modalListen.href = album.url || 'https://yugenwave.bandcamp.com/music';
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
