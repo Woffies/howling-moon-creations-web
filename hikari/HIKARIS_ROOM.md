@@ -6,7 +6,7 @@ Hikari's Room, also called **Hikari's Hideaway**, is the personal, evolving back
 
 - Repository: `Woffies/howling-moon-creations-web`
 - Initial extraction branch: `hikari/canonical-room-scaffold` (merged)
-- Current evolution branch: `hikari/living-room-2026-09-30`
+- Current evolution branch: `hikari/room-first-2026-09-30`
 - Source directory: `hikari/`
 - Entry page: `hikari/index.html`
 - Canonical site path: `https://howlingmooncreations.com/hikari/`
@@ -20,11 +20,12 @@ The standalone room and its homepage portal are present on `main`. The older emb
 - Purpose: curiosities, experiments, notes, tiny discoveries, jokes, interactive secrets, half-finished ideas, and things that escaped the filing cabinet.
 - Signature: “— Hikari, keeper of the back-room light”
 
-The room should feel warm, dim, strange, playful, intimate, slightly haunted, and unmistakably Hikari's. It must not become a generic product page or corporate landing page.
+The room should feel warm, dim, strange, playful, intimate, slightly haunted, and unmistakably Hikari's. It must not become a generic product page or corporate landing page. The room itself—not a portrait of Hikari—is the dominant first impression; Hikari belongs naturally inside the environment.
 
 ## Preserved baseline interactions
 
 - Time-sensitive greeting
+- Rainy window and suspiciously accepting chair
 - Desk note
 - Third drawer
 - Little mirror

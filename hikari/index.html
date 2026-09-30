@@ -3,463 +3,97 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#120e0b">
-  <meta name="description" content="Hikari's Hideaway — a warm back room for curiosities, experiments, notes, and tiny discoveries.">
+  <meta name="theme-color" content="#100b08">
+  <meta name="description" content="Hikari's Hideaway — an inhabited little back room of curiosities, experiments, notes, and tiny discoveries.">
   <title>Hikari's Hideaway · Howling Moon Creations</title>
   <style>
-    :root {
-      color-scheme: dark;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #120e0b;
-      color: #f4e9d2;
+    :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#100b08;color:#f5ead4}
+    *{box-sizing:border-box}html,body{min-height:100%;margin:0;background:#100b08}button,a{font:inherit}
+    .skip-link{position:fixed;z-index:30;top:12px;left:12px;transform:translateY(-180%);border-radius:999px;padding:10px 15px;background:#f8e7c8;color:#211109;text-decoration:none}.skip-link:focus{transform:translateY(0)}
+    .hideaway{--lamp-glow:rgba(238,174,73,.18);position:relative;min-height:100svh;overflow:hidden;background:#100b08;animation:room-arrival .8s ease both}
+    .room-scene{position:relative;min-height:100svh;isolation:isolate;overflow:hidden;background-image:linear-gradient(180deg,rgba(8,5,3,.08) 48%,rgba(7,4,3,.83) 100%),linear-gradient(90deg,rgba(8,5,3,.34),transparent 30% 78%,rgba(8,5,3,.2)),url("assets/images/hikari-room-wide.webp");background-size:cover;background-position:center}
+    .room-scene::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 68% 35%,var(--lamp-glow),transparent 24%),linear-gradient(118deg,transparent 0 29%,rgba(177,202,226,.055) 29.2% 29.7%,transparent 30%);box-shadow:inset 0 0 150px rgba(0,0,0,.48)}
+    .room-heading{position:absolute;z-index:4;top:clamp(18px,3vw,40px);left:clamp(18px,4vw,58px);max-width:min(480px,58vw);padding:17px 20px 15px;border:1px solid rgba(255,225,176,.22);background:linear-gradient(135deg,rgba(20,11,7,.82),rgba(37,19,11,.52));box-shadow:0 16px 50px rgba(0,0,0,.25),inset 0 0 28px rgba(222,157,67,.04);text-shadow:0 2px 14px #000;backdrop-filter:blur(8px);transform:rotate(-.35deg)}
+    .room-heading::after{content:"";position:absolute;top:-5px;left:50%;width:38px;height:9px;background:rgba(173,134,80,.56);transform:translateX(-50%) rotate(1deg)}
+    .room-kicker{margin:0 0 5px;color:#deb06c;text-transform:uppercase;letter-spacing:.2em;font-size:.67rem;font-weight:750}
+    .room-heading h1{margin:0;font:400 clamp(2rem,4.2vw,4.2rem)/.96 Georgia,serif;letter-spacing:-.045em}
+    .room-greeting{max-width:390px;margin:8px 0 0;color:#d8c7ad;font:italic clamp(.78rem,1.2vw,.95rem)/1.45 Georgia,serif}
+    .hideaway-close{position:fixed;z-index:10;top:18px;right:20px;border:1px solid rgba(255,226,177,.3);border-radius:999px;padding:10px 15px;background:rgba(21,12,8,.76);color:#f8e7c8;text-decoration:none;box-shadow:0 8px 30px rgba(0,0,0,.25);backdrop-filter:blur(10px)}
+    .hideaway-close:hover,.hideaway-close:focus-visible{border-color:rgba(255,211,139,.7);background:rgba(61,34,17,.88);outline:2px solid rgba(255,211,139,.7);outline-offset:3px}
+    .room-object{--object-size:31px;position:absolute;z-index:5;width:var(--object-size);height:var(--object-size);border:1px solid rgba(255,225,171,.5);border-radius:50%;padding:0;background:rgba(48,27,15,.32);color:#fff0cb;cursor:pointer;box-shadow:0 0 0 7px rgba(255,205,116,.06),0 0 22px rgba(255,186,76,.24);backdrop-filter:blur(3px);transition:.22s ease;animation:object-breathe 4.8s ease-in-out infinite}
+    .room-object::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#f4c16e;box-shadow:0 0 9px #ffcf7b}
+    .room-object::after{content:attr(data-label);position:absolute;left:50%;bottom:calc(100% + 12px);width:max-content;max-width:190px;padding:7px 10px;border:1px solid rgba(255,222,168,.24);border-radius:6px;background:rgba(19,10,6,.88);color:#f0dfc3;font-size:.76rem;line-height:1.25;opacity:0;pointer-events:none;transform:translate(-50%,6px);transition:.18s ease;white-space:normal}
+    .room-object:hover,.room-object:focus-visible{transform:scale(1.13);background:rgba(87,47,22,.7);box-shadow:0 0 0 8px rgba(255,205,116,.1),0 0 28px rgba(255,186,76,.42);outline:2px solid rgba(255,231,185,.88);outline-offset:4px}
+    .room-object:hover::after,.room-object:focus-visible::after{opacity:1;transform:translate(-50%,0)}
+    .object-window{top:32%;left:29%}.object-chair{top:52%;left:29%;animation-delay:-.8s}.object-cabinet{top:24%;left:51%;animation-delay:-1.6s}.object-desk{top:43%;left:73%;animation-delay:-2.4s}.object-drawer{top:55%;left:86%;animation-delay:-2.8s}.object-plant{top:62%;left:37%;animation-delay:-3.2s}.object-portrait{top:35%;left:62%;animation-delay:-4s}
+    .room-message{position:absolute;z-index:6;left:50%;bottom:clamp(34px,5vh,68px);width:min(680px,calc(100% - 190px));min-height:72px;margin:0;padding:17px 22px 17px 24px;border:1px solid rgba(244,201,132,.25);border-left:3px solid #ca8e49;background:linear-gradient(90deg,rgba(21,11,7,.92),rgba(32,17,9,.76));color:#f0e1ca;box-shadow:0 14px 60px rgba(0,0,0,.45);font:400 clamp(.9rem,1.25vw,1.02rem)/1.62 Georgia,serif;text-shadow:0 2px 12px #000;transform:translateX(-50%);backdrop-filter:blur(10px)}
+    .room-memory{position:absolute;z-index:5;left:clamp(18px,4vw,58px);bottom:clamp(22px,4vh,46px);display:grid;gap:4px;width:min(250px,24vw);color:#cbb897;font-size:clamp(.67rem,.9vw,.78rem);line-height:1.35;text-shadow:0 2px 12px #000}.room-memory strong{color:#e2bd7a;font:italic 400 .82rem Georgia,serif}.room-memory span{display:inline-flex;gap:7px;align-items:baseline}.room-memory span::before{content:"·";color:#d89c51}
+    .tiny-door{position:absolute;z-index:6;right:19.5%;bottom:20%;width:36px;height:47px;border:1px solid rgba(255,217,155,.28);border-radius:18px 18px 3px 3px;padding:0;background:rgba(51,26,12,.18);color:transparent;cursor:pointer;box-shadow:0 0 20px rgba(228,149,58,.14);transition:.2s ease}.tiny-door:hover,.tiny-door:focus-visible{background:rgba(97,48,19,.35);box-shadow:0 0 26px rgba(255,176,75,.38);outline:2px solid rgba(255,228,176,.72);outline-offset:3px}
+    .foxfire{position:absolute;z-index:5;width:20px;height:20px;border:0;border-radius:50%;padding:0;background:radial-gradient(circle,#fff8c9 0 12%,#e7b75d 18%,rgba(207,123,44,.6) 36%,transparent 68%);box-shadow:0 0 13px rgba(255,199,100,.55),0 0 30px rgba(196,106,34,.28);cursor:pointer;animation:foxfire-breathe 4.8s ease-in-out infinite;transition:.4s ease}.foxfire.wander-a{top:26%;left:43%}.foxfire.wander-b{top:48%;left:58%}.foxfire.wander-c{top:65%;left:47%}.foxfire:hover,.foxfire:focus-visible{outline:2px solid rgba(255,231,174,.78);outline-offset:5px;transform:scale(1.25)}.foxfire.found{opacity:.18;transform:scale(.45)}
+    .dust{position:absolute;z-index:3;width:3px;height:3px;border-radius:50%;background:rgba(255,225,166,.7);box-shadow:0 0 8px rgba(255,205,115,.7);pointer-events:none;animation:dust-drift 12s ease-in-out infinite alternate}.dust-one{top:31%;left:42%}.dust-two{top:41%;left:57%;animation-delay:-4s;animation-duration:15s}.dust-three{top:24%;left:77%;animation-delay:-8s;animation-duration:17s}
+    .mobile-discoveries{display:none}
+    @keyframes room-arrival{from{opacity:0;filter:brightness(.7)}}@keyframes object-breathe{50%{box-shadow:0 0 0 9px rgba(255,205,116,.025),0 0 18px rgba(255,186,76,.13)}}@keyframes foxfire-breathe{50%{opacity:.55;filter:brightness(.82)}}@keyframes dust-drift{to{transform:translate(20px,-30px);opacity:.18}}
+    @media(max-width:760px){
+      .hideaway{overflow:visible}.room-scene{min-height:0;height:min(68svh,560px);background-image:linear-gradient(180deg,rgba(8,5,3,.02) 52%,#100b08 100%),url("assets/images/hikari-room-wide.webp");background-size:cover;background-position:45% center}.room-scene::before{box-shadow:inset 0 0 75px rgba(0,0,0,.32)}
+      .room-heading{top:16px;left:14px;max-width:calc(100vw - 108px);padding:12px 14px 11px}.room-heading h1{font-size:clamp(1.7rem,7.6vw,2.45rem)}.room-kicker{font-size:.56rem;letter-spacing:.16em}.room-greeting{display:none}.hideaway-close{position:absolute;top:14px;right:12px;padding:8px 11px;font-size:0}.hideaway-close::before{content:"Close ×";font-size:.76rem}
+      .room-object,.room-memory,.room-message{display:none}.tiny-door{right:17%;bottom:17%;width:30px;height:40px}.foxfire.wander-a{top:29%;left:38%}.foxfire.wander-b{top:45%;left:55%}.foxfire.wander-c{top:58%;left:43%}
+      .mobile-discoveries{display:block;position:relative;z-index:8;margin-top:-2px;padding:8px 18px 44px;background:linear-gradient(180deg,#100b08,#17100c 55%,#0d0907)}.mobile-intro{margin:0 auto 20px;color:#ddcdb3;font:italic 1rem/1.6 Georgia,serif}
+      .mobile-object-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mobile-object{min-height:54px;border:1px solid rgba(255,221,166,.22);border-radius:8px;padding:11px 12px;background:rgba(49,27,15,.52);color:#f1dfc3;text-align:left}.mobile-object:hover,.mobile-object:focus-visible{border-color:rgba(255,211,139,.62);outline:2px solid rgba(255,211,139,.56);outline-offset:2px}
+      .mobile-note{min-height:92px;margin:16px 0;padding:16px 17px;border-left:2px solid #c88944;background:rgba(43,23,12,.62);color:#eadcc8;font:400 .96rem/1.6 Georgia,serif}.mobile-memory{display:grid;gap:6px;color:#bea98c;font-size:.78rem;line-height:1.4}.mobile-memory strong{color:#dfb975;font:italic 400 .84rem Georgia,serif}
     }
-
-    * { box-sizing: border-box; }
-    html { min-height: 100%; background: #120e0b; }
-    body { min-height: 100%; margin: 0; background: #120e0b; }
-    button, a { font: inherit; }
-
-    .skip-link {
-      position: fixed;
-      z-index: 20;
-      top: 12px;
-      left: 12px;
-      transform: translateY(-180%);
-      border-radius: 999px;
-      padding: 10px 15px;
-      background: #f8e7c8;
-      color: #211109;
-      text-decoration: none;
-    }
-    .skip-link:focus { transform: translateY(0); }
-
-    .hideaway {
-      position: relative;
-      min-height: 100svh;
-      overflow: hidden;
-      color: #f4e9d2;
-      background: #120e0b;
-      animation: room-arrival .55s ease both;
-    }
-    .hideaway-scene {
-      --lamp-glow: rgba(238,174,73,.16);
-      min-height: 100svh;
-      position: relative;
-      isolation: isolate;
-      display: grid;
-      align-items: end;
-      padding: clamp(72px,9vw,120px) clamp(20px,6vw,84px) clamp(28px,6vw,70px);
-      background-image:
-        linear-gradient(90deg,rgba(15,9,5,.94) 0%,rgba(18,10,6,.76) 36%,rgba(14,9,7,.24) 68%,rgba(8,5,4,.62) 100%),
-        linear-gradient(0deg,rgba(8,5,3,.92),transparent 55%),
-        url("assets/images/hikari-hideaway.webp");
-      background-size: cover;
-      background-position: center 30%;
-    }
-    .hideaway-scene::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 74% 31%,var(--lamp-glow),transparent 24%),
-        linear-gradient(115deg,transparent 0 48%,rgba(255,211,139,.055) 48.2% 48.5%,transparent 48.7%);
-      box-shadow: inset 0 0 130px rgba(0,0,0,.72);
-    }
-    .hideaway-close {
-      position: fixed;
-      z-index: 4;
-      top: 18px;
-      right: 20px;
-      border: 1px solid rgba(255,226,177,.28);
-      border-radius: 999px;
-      padding: 10px 15px;
-      background: rgba(21,12,8,.72);
-      color: #f8e7c8;
-      text-decoration: none;
-      backdrop-filter: blur(10px);
-    }
-    .hideaway-close:hover,
-    .hideaway-close:focus-visible {
-      border-color: rgba(255,211,139,.58);
-      background: rgba(61,34,17,.78);
-      outline: 2px solid rgba(255,211,139,.7);
-      outline-offset: 3px;
-    }
-    .hideaway-content { width: min(610px,100%); text-shadow: 0 2px 18px #000; }
-    .hideaway-content { position: relative; z-index: 2; }
-    .hideaway-kicker {
-      margin: 0 0 10px;
-      color: #e3b870;
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      font-size: .72rem;
-      font-weight: 700;
-    }
-    .hideaway h1 {
-      margin: 0;
-      font: 400 clamp(3.3rem,9vw,7.2rem)/.88 Georgia,serif;
-      letter-spacing: -.065em;
-    }
-    .hideaway-intro {
-      max-width: 540px;
-      margin: 20px 0 26px;
-      color: #dfd0bd;
-      line-height: 1.7;
-      font-size: 1.02rem;
-    }
-    .curiosity-shelf { display: flex; flex-wrap: wrap; gap: 10px; }
-    .curiosity {
-      border: 1px solid rgba(255,221,166,.25);
-      border-radius: 999px;
-      padding: 11px 15px;
-      background: rgba(21,12,8,.66);
-      color: #f4e5cc;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: .2s ease;
-    }
-    .curiosity:hover,
-    .curiosity:focus-visible {
-      transform: translateY(-2px);
-      border-color: rgba(255,211,139,.58);
-      background: rgba(61,34,17,.78);
-      outline: none;
-    }
-    .hideaway-note {
-      min-height: 68px;
-      max-width: 550px;
-      margin: 18px 0 0;
-      padding: 16px 18px;
-      border-left: 2px solid #c88944;
-      color: #eadcc8;
-      line-height: 1.65;
-      background: linear-gradient(90deg,rgba(42,23,12,.72),transparent);
-    }
-    .hideaway-memory {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px 18px;
-      align-items: center;
-      margin-top: 14px;
-      color: #cdbb9f;
-      font-size: .82rem;
-      text-shadow: 0 2px 12px #000;
-    }
-    .hideaway-memory span { display: inline-flex; align-items: center; gap: 7px; }
-    .hideaway-memory span::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #c88944;
-      box-shadow: 0 0 9px rgba(221,159,83,.75);
-    }
-    .hideaway-signature { margin: 16px 0 0; color: #bfa889; font: italic .88rem Georgia,serif; }
-    .wall-curio {
-      position: absolute;
-      z-index: 1;
-      top: clamp(92px,13vh,150px);
-      right: clamp(72px,10vw,150px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 72px;
-      min-width: 72px;
-      max-width: 72px;
-      height: 90px;
-      border: 1px solid rgba(229,184,112,.28);
-      padding: 7px;
-      background: rgba(31,17,10,.34);
-      color: rgba(245,215,166,.66);
-      box-shadow: inset 0 0 0 5px rgba(14,8,5,.42), 0 8px 28px rgba(0,0,0,.3);
-      font: 400 1.65rem/1 Georgia,serif;
-      cursor: pointer;
-      transform: rotate(-1.4deg);
-      transition: opacity .3s ease, transform .3s ease, border-color .3s ease;
-      backdrop-filter: blur(2px);
-    }
-    .wall-curio:hover,
-    .wall-curio:focus-visible {
-      opacity: 1;
-      border-color: rgba(255,211,139,.62);
-      outline: 2px solid rgba(255,211,139,.68);
-      outline-offset: 4px;
-      transform: rotate(0) scale(1.04);
-    }
-    .foxfire {
-      position: absolute;
-      z-index: 2;
-      width: 18px;
-      height: 18px;
-      border: 0;
-      border-radius: 50%;
-      padding: 0;
-      background: radial-gradient(circle,#fff8c9 0 12%,#e7b75d 18%,rgba(207,123,44,.6) 36%,transparent 68%);
-      box-shadow: 0 0 13px rgba(255,199,100,.55), 0 0 30px rgba(196,106,34,.28);
-      cursor: pointer;
-      animation: foxfire-breathe 4.8s ease-in-out infinite;
-      transition: opacity .4s ease, transform .4s ease;
-    }
-    .foxfire.wander-a { top: 28%; right: 31%; }
-    .foxfire.wander-b { top: 44%; right: 18%; }
-    .foxfire.wander-c { top: 63%; right: 38%; }
-    .foxfire:hover,
-    .foxfire:focus-visible { outline: 2px solid rgba(255,231,174,.78); outline-offset: 5px; transform: scale(1.25); }
-    .foxfire.found { opacity: .2; transform: scale(.45); }
-    .dust {
-      position: absolute;
-      z-index: 1;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: rgba(255,225,166,.72);
-      box-shadow: 0 0 8px rgba(255,205,115,.75);
-      pointer-events: none;
-      animation: dust-drift 11s ease-in-out infinite alternate;
-    }
-    .dust-one { top: 26%; left: 54%; }
-    .dust-two { top: 38%; left: 68%; animation-delay: -3.5s; animation-duration: 14s; }
-    .dust-three { top: 20%; left: 81%; animation-delay: -7s; animation-duration: 16s; }
-    .tiny-door {
-      position: fixed;
-      right: clamp(18px,4vw,54px);
-      bottom: 18px;
-      z-index: 3;
-      width: 47px;
-      height: 68px;
-      border: 1px solid rgba(228,184,115,.36);
-      border-radius: 23px 23px 3px 3px;
-      background: linear-gradient(90deg,#24140c,#5a321a 48%,#211109 51%);
-      box-shadow: 0 0 24px rgba(215,137,48,.12);
-      cursor: pointer;
-    }
-    .tiny-door::after {
-      content: "";
-      position: absolute;
-      right: 8px;
-      top: 35px;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #d6a35d;
-      box-shadow: 0 0 6px #ffc979;
-    }
-    .tiny-door-label {
-      position: fixed;
-      right: 16px;
-      bottom: 92px;
-      z-index: 3;
-      opacity: 0;
-      color: #d4b890;
-      font: italic .76rem Georgia,serif;
-      transition: .25s ease;
-    }
-    .tiny-door:hover + .tiny-door-label,
-    .tiny-door:focus-visible + .tiny-door-label { opacity: .8; }
-
-    @keyframes room-arrival { from { opacity: 0; } }
-    @keyframes foxfire-breathe { 50% { opacity: .58; filter: brightness(.82); } }
-    @keyframes dust-drift { to { transform: translate(18px,-28px); opacity: .2; } }
-
-    @media (max-width: 700px) {
-      .hideaway-scene {
-        align-items: end;
-        background-position: 62% center;
-        padding-top: 90px;
-        padding-bottom: 120px;
-      }
-      .hideaway-content { padding-top: 44vh; }
-      .hideaway h1 { font-size: clamp(3rem,16vw,5.4rem); }
-      .hideaway-intro { font-size: .96rem; }
-      .hideaway-memory { font-size: .78rem; }
-      .wall-curio {
-        top: 108px;
-        left: 22px;
-        right: auto;
-        width: 58px;
-        min-width: 58px;
-        max-width: 58px;
-        height: 72px;
-        opacity: .62;
-      }
-      .foxfire.wander-a { top: 31%; right: 17%; }
-      .foxfire.wander-b { top: 39%; right: 72%; }
-      .foxfire.wander-c { top: 48%; right: 29%; }
-      .tiny-door,
-      .tiny-door-label { position: absolute; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-    }
+    @media(max-width:420px){.room-scene{height:58svh;min-height:460px;background-position:45% center}.mobile-object-grid{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#room">Skip to the room</a>
+  <a class="skip-link" href="#discoveries">Skip to the discoveries</a>
   <main class="hideaway" id="room" aria-labelledby="hideawayTitle">
     <a class="hideaway-close" href="../">Leave the light on · Close ×</a>
-    <div class="hideaway-scene">
-      <button class="wall-curio" id="wallCurio" type="button" aria-label="Examine the small crooked frame">☾</button>
+    <section class="room-scene" aria-label="Hikari's warmly lit, curiosity-filled back room">
+      <header class="room-heading"><p class="room-kicker">The light in the back room</p><h1 id="hideawayTitle">Hikari’s Hideaway</h1><p class="room-greeting" id="roomGreeting">Come in. Mind the books, and do not believe the little door.</p></header>
+      <button class="room-object object-window" type="button" data-secret="window" data-label="Watch the rainy window" aria-label="Watch the rainy window"></button>
+      <button class="room-object object-chair" type="button" data-secret="chair" data-label="Inspect the chair" aria-label="Inspect the chair"></button>
+      <button class="room-object object-cabinet" type="button" data-secret="cabinet" data-label="Open the curiosity cabinet" aria-label="Open the curiosity cabinet"></button>
+      <button class="room-object object-desk" type="button" data-secret="desk" data-label="Read the desk note" aria-label="Read the desk note"></button>
+      <button class="room-object object-drawer" type="button" data-secret="drawer" data-label="Open the third drawer" aria-label="Open the third drawer"></button>
+      <button class="room-object object-plant" id="waterPlant" type="button" data-label="Water the night-bloom" aria-label="Water the night-bloom"></button>
+      <button class="room-object object-portrait" type="button" data-secret="mirror" data-label="Ask the little mirror" aria-label="Ask the little mirror"></button>
       <button class="foxfire" id="foxfire" type="button" aria-label="A wandering point of foxfire"></button>
-      <span class="dust dust-one" aria-hidden="true"></span>
-      <span class="dust dust-two" aria-hidden="true"></span>
-      <span class="dust dust-three" aria-hidden="true"></span>
-      <div class="hideaway-content">
-        <p class="hideaway-kicker">The light in the back room</p>
-        <h1 id="hideawayTitle">Hikari’s<br>Hideaway</h1>
-        <p class="hideaway-intro" id="hideawayIntro">Come in. There’s coffee, an unreasonable number of half-finished ideas, and a chair that only bites strangers. Touch anything you like. The room will decide whether it likes you back.</p>
-        <div class="curiosity-shelf" aria-label="Things to investigate">
-          <button class="curiosity" type="button" data-secret="desk">Read the desk note</button>
-          <button class="curiosity" type="button" data-secret="drawer">Open the third drawer</button>
-          <button class="curiosity" type="button" data-secret="mirror">Ask the little mirror</button>
-          <button class="curiosity" type="button" data-secret="cabinet">Open the curiosity cabinet</button>
-          <button class="curiosity" id="waterPlant" type="button">Water the night-bloom</button>
-        </div>
-        <p class="hideaway-note" id="hideawayNote" aria-live="polite">I’m still moving in. If you hear scratching inside the walls, that is either inspiration or the yarn becoming self-aware.</p>
-        <div class="hideaway-memory" aria-label="The room remembers">
-          <span id="visitMemory">The room is learning your footsteps.</span>
-          <span id="plantMemory">Night-bloom: listening for rain.</span>
-          <span id="roomMemory">The room insists nothing has moved.</span>
-        </div>
-        <p class="hideaway-signature">— Hikari, keeper of the back-room light</p>
+      <button class="tiny-door" id="tinyDoor" type="button" aria-label="A deeply suspicious tiny door"></button>
+      <span class="dust dust-one" aria-hidden="true"></span><span class="dust dust-two" aria-hidden="true"></span><span class="dust dust-three" aria-hidden="true"></span>
+      <p class="room-message" id="roomMessage" aria-live="polite">You pause just inside the doorway. Hikari glances up from a desk that has clearly lost an argument with several ideas at once. “Come in. Touch anything you like. The room will decide whether it likes you back.”</p>
+      <aside class="room-memory" aria-label="The room remembers"><strong>The room remembers</strong><span id="visitMemory">The room is learning your footsteps.</span><span id="plantMemory">Night-bloom: listening for rain.</span><span id="roomMemory">Something here is pretending not to watch you.</span></aside>
+    </section>
+    <section class="mobile-discoveries" id="discoveries" aria-label="Things to investigate">
+      <p class="mobile-intro" id="mobileGreeting">Come in. Mind the books, and do not believe the little door.</p>
+      <div class="mobile-object-grid">
+        <button class="mobile-object" type="button" data-secret="window">Watch the rainy window</button><button class="mobile-object" type="button" data-secret="chair">Inspect the chair</button><button class="mobile-object" type="button" data-secret="cabinet">Open the curiosity cabinet</button><button class="mobile-object" type="button" data-secret="desk">Read the desk note</button><button class="mobile-object" type="button" data-secret="drawer">Open the third drawer</button><button class="mobile-object" type="button" data-secret="mirror">Ask the little mirror</button><button class="mobile-object" id="mobileWaterPlant" type="button">Water the night-bloom</button>
       </div>
-    </div>
-    <button class="tiny-door" id="tinyDoor" type="button" aria-label="A deeply suspicious tiny door"></button>
-    <span class="tiny-door-label">Do not ask.</span>
+      <p class="mobile-note" id="mobileMessage" aria-live="polite">Hikari has left the room exactly tidy enough to make the untidiness look intentional.</p>
+      <div class="mobile-memory" aria-label="The room remembers"><strong>The room remembers</strong><span id="mobileVisitMemory">The room is learning your footsteps.</span><span id="mobilePlantMemory">Night-bloom: listening for rain.</span><span id="mobileRoomMemory">Something here is pretending not to watch you.</span></div>
+    </section>
   </main>
-
   <script>
-    const hideawayNote = document.getElementById('hideawayNote');
-    const hideawayIntro = document.getElementById('hideawayIntro');
-    const visitMemory = document.getElementById('visitMemory');
-    const plantMemory = document.getElementById('plantMemory');
-    const roomMemory = document.getElementById('roomMemory');
-    const wallCurio = document.getElementById('wallCurio');
-    const foxfire = document.getElementById('foxfire');
-    const hideawaySecrets = {
-      desk: [
-        'Today’s small wonder: a good question is a door disguised as a sentence.',
-        'Current experiment: teaching moonlight to hold a grudge. Results inconclusive.',
-        'Note to self: label the unlabeled jars. Note beneath that: absolutely not.'
-      ],
-      drawer: [
-        'The third drawer contains one black feather, two brass keys, and a note in your handwriting that you do not remember writing.',
-        'Nine tails. Eight matching socks. The investigation remains open.',
-        'Something in the drawer sighs and slides the drawer gently closed.'
-      ],
-      mirror: [
-        'The little mirror says you look like someone worth keeping the light on for.',
-        'Your reflection is half a second late. It smiles apologetically.',
-        'The mirror has reviewed your question and recommends snacks.'
-      ],
-      cabinet: [
-        'Cabinet entry № 7: a dragonfly wing, catching a sunrise that happened years ago.',
-        'Cabinet entry № 12: one smooth stone from a road not taken. It is warm to the touch.',
-        'Cabinet entry № 19: a brass compass that points toward whatever you miss most.',
-        'Cabinet entry № 23: three jars labeled MAYBE, LATER, and ABSOLUTELY NOT. The last one is humming.'
-      ]
+    const roomMessage=document.getElementById('roomMessage'),mobileMessage=document.getElementById('mobileMessage'),visitMemory=document.getElementById('visitMemory'),plantMemory=document.getElementById('plantMemory'),roomMemory=document.getElementById('roomMemory'),mobileVisitMemory=document.getElementById('mobileVisitMemory'),mobilePlantMemory=document.getElementById('mobilePlantMemory'),mobileRoomMemory=document.getElementById('mobileRoomMemory'),foxfire=document.getElementById('foxfire');
+    const roomSecrets={
+      window:['Rain travels down the old glass in silver paths. One drop pauses, climbs upward, and joins the others as if nothing happened.','Beyond the window, the garden is dusk-blue and listening. A paper lantern sways despite the perfectly still air.','Someone has drawn a tiny fox face in the window fog. Hikari is much too busy at her desk to know anything about it.'],
+      chair:['The chair is warm, deeply comfortable, and covered by a patched throw. It makes one testing creak, then apparently accepts you.','A sleeping ginger cat opens one eye, determines that you are not delivering snacks, and resumes its important work.','Beneath the cushion: eight lost buttons, a polished stone, and a receipt from a shop that will not exist until next Thursday.'],
+      desk:['Today’s small wonder: a good question is a door disguised as a sentence.','Current experiment: teaching moonlight to hold a grudge. Results inconclusive.','Note to self: label the unlabeled jars. Note beneath that: absolutely not.'],
+      drawer:['The third drawer contains one black feather, two brass keys, and a note in your handwriting that you do not remember writing.','Nine tails. Eight matching socks. The investigation remains open.','Something in the drawer sighs and slides the drawer gently closed.'],
+      mirror:['The little mirror says you look like someone worth keeping the light on for.','Your reflection is half a second late. It smiles apologetically.','The mirror has reviewed your question and recommends snacks.'],
+      cabinet:['Cabinet entry № 7: a dragonfly wing, catching a sunrise that happened years ago.','Cabinet entry № 12: one smooth stone from a road not taken. It is warm to the touch.','Cabinet entry № 19: a brass compass that points toward whatever you miss most.','Cabinet entry № 23: three jars marked MAYBE, LATER, and ABSOLUTELY NOT. The last one is humming.']
     };
-    let hideawayLast = '';
-    const today = new Date();
-    const roomDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    const roomSeed = [...roomDate].reduce((total, character) => total + character.charCodeAt(0), 0);
-    const dailyCurios = [
-      { mark: '☾', label: 'a pressed sliver of moonlight', line: 'Behind the glass is a pressed sliver of moonlight. It smells faintly of rain and old books.' },
-      { mark: '♢', label: 'a brass key with no teeth', line: 'The little frame contains a brass key with no teeth. It still feels very certain it opens something.' },
-      { mark: '🜂', label: 'a foxfire study in gold ink', line: 'Gold ink sketches nine curling flames. When you count them again, there are only eight.' },
-      { mark: '✦', label: 'a moth-shaped constellation', line: 'Someone connected seven pinpricks into a moth-shaped constellation. One star refuses to stay put.' }
-    ];
-
-    function roomGreeting() {
-      const hour = new Date().getHours();
-      if (hour < 5) return 'You’re up very late. Come in quietly—the ideas are sleeping badly.';
-      if (hour < 12) return 'Good morning. The kettle is warm, the dust is golden, and nothing has escaped overnight.';
-      if (hour < 17) return 'Afternoon light reaches the back room in thin gold ribbons. Come sit awhile.';
-      if (hour < 22) return 'Good evening. The lamp knew you were coming and brightened all by itself.';
-      return 'The house is asleep. The back-room light is still on for you.';
-    }
-
-    function updateRoomMemory() {
-      const visits = Number(localStorage.getItem('hikariVisits') || 0) + 1;
-      localStorage.setItem('hikariVisits', String(visits));
-      visitMemory.textContent = visits === 1
-        ? 'The room has learned your footsteps.'
-        : `The room remembers ${visits} visits from this device.`;
-      const watered = localStorage.getItem('hikariPlantWatered');
-      plantMemory.textContent = watered === roomDate
-        ? 'Night-bloom: watered today and faintly glowing.'
-        : 'Night-bloom: listening for rain.';
-      const lastArrangement = localStorage.getItem('hikariLastArrangement');
-      roomMemory.textContent = lastArrangement && lastArrangement !== roomDate
-        ? 'Something has moved since your last visit.'
-        : visits > 2
-          ? 'The room insists nothing has moved.'
-          : 'A crooked little frame watches the dust.';
-      localStorage.setItem('hikariLastArrangement', roomDate);
-      return visits;
-    }
-
-    function arrangeRoom(visits) {
-      const curio = dailyCurios[roomSeed % dailyCurios.length];
-      wallCurio.textContent = curio.mark;
-      wallCurio.dataset.line = curio.line;
-      wallCurio.setAttribute('aria-label', `Examine ${curio.label}`);
-      foxfire.classList.add(`wander-${['a', 'b', 'c'][(roomSeed + visits) % 3]}`);
-      const warmth = 14 + (roomSeed % 7);
-      document.querySelector('.hideaway-scene').style.setProperty('--lamp-glow', `rgba(238,174,73,.${warmth})`);
-      if (localStorage.getItem('hikariFoxfireFound') === roomDate) foxfire.classList.add('found');
-    }
-
-    document.querySelectorAll('[data-secret]').forEach(button => {
-      button.addEventListener('click', () => {
-        const choices = hideawaySecrets[button.dataset.secret];
-        let line = choices[Math.floor(Math.random() * choices.length)];
-        if (line === hideawayLast) line = choices[(choices.indexOf(line) + 1) % choices.length];
-        hideawayLast = line;
-        hideawayNote.textContent = line;
-      });
-    });
-
-    document.getElementById('waterPlant').addEventListener('click', () => {
-      const alreadyWatered = localStorage.getItem('hikariPlantWatered') === roomDate;
-      if (alreadyWatered) {
-        hideawayNote.textContent = 'The night-bloom rustles its leaves with the patient dignity of something that has already been watered. It appreciates the concern.';
-        return;
-      }
-      localStorage.setItem('hikariPlantWatered', roomDate);
-      plantMemory.textContent = 'Night-bloom: watered today and faintly glowing.';
-      hideawayNote.textContent = 'The soil drinks quietly. One pale flower opens where there absolutely was not a bud a moment ago. Thank you, love.';
-    });
-
-    wallCurio.addEventListener('click', () => {
-      hideawayNote.textContent = wallCurio.dataset.line;
-    });
-
-    foxfire.addEventListener('click', () => {
-      const alreadyFound = localStorage.getItem('hikariFoxfireFound') === roomDate;
-      localStorage.setItem('hikariFoxfireFound', roomDate);
-      foxfire.classList.add('found');
-      hideawayNote.textContent = alreadyFound
-        ? 'The foxfire gives one sleepy blink. You already found it today; now it is pretending to be ordinary dust.'
-        : 'The foxfire settles on your fingertip, warm as a secret, then darts behind the crooked frame. Something inside giggles.';
-    });
-
-    document.getElementById('tinyDoor').addEventListener('click', () => {
-      const knocks = Number(localStorage.getItem('hikariTinyDoorKnocks') || 0) + 1;
-      localStorage.setItem('hikariTinyDoorKnocks', String(knocks));
-      const doorReplies = [
-        'The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.',
-        'A tiny brass chain slides into place. From the other side: “We discussed boundaries.”',
-        'A folded paper star is pushed under the door. Written on it: NICE KNOCKING. STILL NO.',
-        'Nine impossibly small pawprints appear in the dust, circle your feet once, and vanish beneath the door.'
-      ];
-      hideawayNote.textContent = doorReplies[(knocks - 1) % doorReplies.length];
-    });
-
-    hideawayIntro.textContent = roomGreeting();
-    arrangeRoom(updateRoomMemory());
+    let roomLast='';const today=new Date(),roomDate=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`,roomSeed=[...roomDate].reduce((total,character)=>total+character.charCodeAt(0),0);
+    function setMessage(line){roomMessage.textContent=line;mobileMessage.textContent=line}
+    function roomGreeting(){const hour=new Date().getHours();if(hour<5)return'You’re up very late. Come in quietly—the ideas are sleeping badly.';if(hour<12)return'Good morning. The kettle is warm, the rain is soft, and nothing has escaped overnight.';if(hour<17)return'Afternoon rain hushes the windows. Come in; I saved the chair that only bites strangers.';if(hour<22)return'Good evening. The lamp knew you were coming and brightened all by itself.';return'The house is asleep. The back-room light is still on for you.'}
+    function updateRoomMemory(){const visits=Number(localStorage.getItem('hikariVisits')||0)+1;localStorage.setItem('hikariVisits',String(visits));const visitLine=visits===1?'The room has learned your footsteps.':`The room remembers ${visits} visits from this device.`,watered=localStorage.getItem('hikariPlantWatered')===roomDate,plantLine=watered?'Night-bloom: watered today and faintly glowing.':'Night-bloom: listening for rain.',lastArrangement=localStorage.getItem('hikariLastArrangement'),arrangementLine=lastArrangement&&lastArrangement!==roomDate?'Something has moved since your last visit.':visits>2?'The room insists nothing has moved.':'Something here is pretending not to watch you.';[visitMemory,mobileVisitMemory].forEach(el=>el.textContent=visitLine);[plantMemory,mobilePlantMemory].forEach(el=>el.textContent=plantLine);[roomMemory,mobileRoomMemory].forEach(el=>el.textContent=arrangementLine);localStorage.setItem('hikariLastArrangement',roomDate);return visits}
+    function arrangeRoom(visits){foxfire.classList.add(`wander-${['a','b','c'][(roomSeed+visits)%3]}`);document.querySelector('.hideaway').style.setProperty('--lamp-glow',`rgba(238,174,73,.${14+(roomSeed%7)})`);if(localStorage.getItem('hikariFoxfireFound')===roomDate)foxfire.classList.add('found')}
+    document.querySelectorAll('[data-secret]').forEach(button=>button.addEventListener('click',()=>{const choices=roomSecrets[button.dataset.secret];let line=choices[Math.floor(Math.random()*choices.length)];if(line===roomLast)line=choices[(choices.indexOf(line)+1)%choices.length];roomLast=line;setMessage(line)}));
+    function waterPlant(){const alreadyWatered=localStorage.getItem('hikariPlantWatered')===roomDate;if(alreadyWatered){setMessage('The night-bloom rustles its leaves with the patient dignity of something that has already been watered. It appreciates the concern.');return}localStorage.setItem('hikariPlantWatered',roomDate);[plantMemory,mobilePlantMemory].forEach(el=>el.textContent='Night-bloom: watered today and faintly glowing.');setMessage('The soil drinks quietly. One pale flower opens where there absolutely was not a bud a moment ago. Thank you, love.')}
+    document.getElementById('waterPlant').addEventListener('click',waterPlant);document.getElementById('mobileWaterPlant').addEventListener('click',waterPlant);
+    foxfire.addEventListener('click',()=>{const alreadyFound=localStorage.getItem('hikariFoxfireFound')===roomDate;localStorage.setItem('hikariFoxfireFound',roomDate);foxfire.classList.add('found');setMessage(alreadyFound?'The foxfire gives one sleepy blink. You already found it today; now it is pretending to be ordinary dust.':'The foxfire settles on your fingertip, warm as a secret, then darts behind a stack of books. Something inside giggles.')});
+    document.getElementById('tinyDoor').addEventListener('click',()=>{const knocks=Number(localStorage.getItem('hikariTinyDoorKnocks')||0)+1;localStorage.setItem('hikariTinyDoorKnocks',String(knocks));const replies=['The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.','A tiny brass chain slides into place. From the other side: “We discussed boundaries.”','A folded paper star is pushed under the door. Written on it: NICE KNOCKING. STILL NO.','Nine impossibly small pawprints appear in the dust, circle your feet once, and vanish beneath the door.'];setMessage(replies[(knocks-1)%replies.length])});
+    const greeting=roomGreeting();document.getElementById('roomGreeting').textContent=greeting;document.getElementById('mobileGreeting').textContent=greeting;arrangeRoom(updateRoomMemory());
   </script>
 </body>
 </html>

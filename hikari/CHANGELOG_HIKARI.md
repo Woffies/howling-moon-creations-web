@@ -1,5 +1,14 @@
 # Hikari's Room Changelog
 
+## 2026-09-30 — enter the room
+
+- Rebuilt the visual hierarchy around a wide establishing view from just inside Hikari's doorway.
+- Made the inhabited room the dominant first impression and placed Hikari naturally at her desk instead of presenting her as a full-screen portrait.
+- Reframed exploration as subtle hotspots attached to objects in the room.
+- Added rainy-window and chair discoveries while preserving the desk note, third drawer, mirror, cabinet, night-bloom, foxfire, tiny door, and room memory.
+- Added a dedicated narrow-screen composition that opens on the room and moves accessible discovery controls into a comfortable panel beneath it.
+- Preserved time-sensitive greetings, local visit memory, daily plant memory, daily environmental variation, reduced-motion support, and return-to-HMC behavior.
+
 ## 2026-09-30 — the room rearranges itself
 
 - Added a daily-changing crooked wall curio with four small discoveries.
