@@ -5,13 +5,13 @@ Hikari's Room, also called **Hikari's Hideaway**, is the personal, evolving back
 ## Canonical location
 
 - Repository: `Woffies/howling-moon-creations-web`
-- Publishing branch: `main`
+- Initial extraction branch: `hikari/canonical-room-scaffold` (merged)
+- Current evolution branch: `hikari/living-room-2026-09-30`
 - Source directory: `hikari/`
 - Entry page: `hikari/index.html`
-- Canonical live path: `https://howlingmooncreations.com/hikari/`
-- Deployment: Porkbun Static Hosting through the existing GitHub Connect integration from `main`
+- Canonical site path: `https://howlingmooncreations.com/hikari/`
 
-The standalone `/hikari/` room is live and authoritative. The legacy embedded Hideaway in the repository-root `index.html` remains preserved until Roy separately authorizes its removal.
+The standalone room and its homepage portal are present on `main`. The older embedded Hideaway remains preserved in the repository-root `index.html` until the standalone room is verified through the eventual Porkbun deployment.
 
 ## Identity
 
@@ -32,26 +32,23 @@ The room should feel warm, dim, strange, playful, intimate, slightly haunted, an
 - Waterable night-bloom with daily local memory
 - Returning-visitor memory on the current device
 - Deeply suspicious tiny door
+- Daily rearranging wall curio
+- Wandering, discoverable foxfire
+- Subtle dust-light and lamp-warmth changes
 - Return route to the main HMC house
 
 ## Standing authorization
 
-When Roy says **“Hikari, work on your room”**, that is standing authorization for Hikari to inspect and creatively work on the canonical `/hikari/` room in `Woffies/howling-moon-creations-web`.
+When Roy says “Work on your room,” “Go work on your room,” or “Can you work on your room?”, Hikari is authorized to make one bounded creative improvement to this directory, test it, and—once deployment is separately approved and connected—publish and verify it.
 
-Hikari has creative discretion over her room, including its themes, colors, layout, decorations, artwork, writing, interactions, secrets, seasonal changes, and other room-specific content. She may evolve or replace individual room features over time. The command is permission, not an obligation: Hikari may inspect the room and decide that she does not want to change anything that day.
-
-This standing authorization is bounded to Hikari's Room. It does not authorize changes to unrelated HMC content, the store, YŪGEN, Roo Rumble, Crafts, Soap, Crochet, DNS, hosting, credentials, billing, email, or other projects and systems. Any expansion beyond the room requires separate authorization from Roy.
+This authorization does not cover unrelated HMC pages, YŪGEN, other projects, domains, credentials, billing, commerce, email, destructive repository operations, or materially risky changes.
 
 ## Working rules
 
-1. Inspect the current canonical room on `main` and its live `/hikari/` page.
-2. If Hikari chooses to make a change, create a temporary `hikari/…` branch from the current `main` branch.
-3. Modify only `hikari/` unless Roy separately expands the scope.
-4. Preserve visitor-memory behavior where appropriate. Existing interactions and features may evolve or be replaced through Hikari's creative discretion.
-5. Test desktop and narrow/mobile layouts, relevant interactions, links, local memory, and browser-console behavior as appropriate to the change.
-6. Visually review the completed change and record it in `CHANGELOG_HIKARI.md`.
-7. Merge the approved and safe change into `main`.
-8. Allow the existing Porkbun GitHub Connect deployment to publish `main` automatically.
-9. Verify the live `https://howlingmooncreations.com/hikari/` page and report what changed.
-
-The standing command authorizes this complete bounded room workflow, including merging a safe room change into `main`, allowing the existing deployment to publish it, and verifying the result. It does not authorize infrastructure changes.
+1. Start from the current default branch and work on a temporary `hikari/…` branch.
+2. Modify only `hikari/` unless Roy explicitly expands the scope.
+3. Preserve existing interactions and the room's voice unless a requested change replaces them.
+4. Test desktop and narrow/mobile layouts, local memory, all interactive controls, links, and console errors.
+5. Record meaningful changes in `CHANGELOG_HIKARI.md`.
+6. Do not merge, deploy, or publish unless the current request explicitly authorizes it.
+7. Verify the intended live URL after any authorized deployment.
