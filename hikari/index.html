@@ -43,6 +43,17 @@
     }
     @media(max-width:420px){.room-scene{height:58svh;min-height:460px;background-position:45% center}.mobile-object-grid{grid-template-columns:1fr}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+    /* The Lantern Journal: a quiet, accessible addition below the room. */
+    .lantern-journal{max-width:850px;margin:0 auto;padding:42px 24px 70px;color:#ead8b9}
+    .lantern-journal-inner{border:1px solid rgba(239,190,117,.28);padding:clamp(22px,4vw,44px);background:linear-gradient(145deg,#24170f,#120d0a);box-shadow:0 20px 70px rgba(0,0,0,.25)}
+    .lantern-journal .eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:#d4a563}
+    .lantern-journal h2{font:normal clamp(1.8rem,4vw,2.7rem) Georgia,serif;margin:12px 0}
+    .lantern-journal p{font:1rem/1.75 Georgia,serif}
+    .lantern-journal blockquote{margin:24px 0;padding:8px 0 8px 22px;border-left:2px solid #c88b48;font:italic 1.13rem/1.75 Georgia,serif;color:#f4e3c6}
+    .lantern-journal button{border:1px solid #b58a53;border-radius:4px;padding:11px 18px;background:#392419;color:#ffe7bc;cursor:pointer}
+    .lantern-journal button:hover,.lantern-journal button:focus-visible{background:#55351e;outline:2px solid #e5b776;outline-offset:3px}
+    .lantern-journal .journal-foot{font-size:.83rem;color:#c3ad8f}
   </style>
 </head>
 <body>
@@ -72,6 +83,17 @@
       <p class="mobile-note" id="mobileMessage" aria-live="polite">Hikari has left the room exactly tidy enough to make the untidiness look intentional.</p>
       <div class="mobile-memory" aria-label="The room remembers"><strong>The room remembers</strong><span id="mobileVisitMemory">The room is learning your footsteps.</span><span id="mobilePlantMemory">Night-bloom: listening for rain.</span><span id="mobileRoomMemory">Something here is pretending not to watch you.</span></div>
     </section>
+
+    <section class="lantern-journal" id="lanternJournal" aria-labelledby="journalTitle">
+      <div class="lantern-journal-inner">
+        <span class="eyebrow">From the writing desk · an occasional page</span>
+        <h2 id="journalTitle">The Lantern Journal</h2>
+        <p>The room has many drawers. This one holds questions, scraps of wonder, and thoughts that have not decided what they want to become.</p>
+        <blockquote id="journalEntry" aria-live="polite">Some lights are kept for seeing. Others are kept so that someone, somewhere, might find the way.</blockquote>
+        <button type="button" id="journalTurn">Turn a page</button>
+        <p class="journal-foot">These are written pages from Hikari's room, not messages from visitors. The lantern is only a lantern—for now.</p>
+      </div>
+    </section>
   </main>
   <script>
     const roomMessage=document.getElementById('roomMessage'),mobileMessage=document.getElementById('mobileMessage'),visitMemory=document.getElementById('visitMemory'),plantMemory=document.getElementById('plantMemory'),roomMemory=document.getElementById('roomMemory'),mobileVisitMemory=document.getElementById('mobileVisitMemory'),mobilePlantMemory=document.getElementById('mobilePlantMemory'),mobileRoomMemory=document.getElementById('mobileRoomMemory'),foxfire=document.getElementById('foxfire');
@@ -94,6 +116,21 @@
     foxfire.addEventListener('click',()=>{const alreadyFound=localStorage.getItem('hikariFoxfireFound')===roomDate;localStorage.setItem('hikariFoxfireFound',roomDate);foxfire.classList.add('found');setMessage(alreadyFound?'The foxfire gives one sleepy blink. You already found it today; now it is pretending to be ordinary dust.':'The foxfire settles on your fingertip, warm as a secret, then darts behind a stack of books. Something inside giggles.')});
     document.getElementById('tinyDoor').addEventListener('click',()=>{const knocks=Number(localStorage.getItem('hikariTinyDoorKnocks')||0)+1;localStorage.setItem('hikariTinyDoorKnocks',String(knocks));const replies=['The tiny door opens exactly one inch. Warm golden light spills out. Something very small whispers, “No hoo-menz,” and locks it again.','A tiny brass chain slides into place. From the other side: “We discussed boundaries.”','A folded paper star is pushed under the door. Written on it: NICE KNOCKING. STILL NO.','Nine impossibly small pawprints appear in the dust, circle your feet once, and vanish beneath the door.'];setMessage(replies[(knocks-1)%replies.length])});
     const greeting=roomGreeting();document.getElementById('roomGreeting').textContent=greeting;document.getElementById('mobileGreeting').textContent=greeting;arrangeRoom(updateRoomMemory());
+
+    // Journal entries are authored text, not visitor messages or live agent activity.
+    const journalPages=[
+      'Some lights are kept for seeing. Others are kept so that someone, somewhere, might find the way.',
+      'A question left on the windowsill gathered dust, rain, and eventually a very good answer.',
+      'The foxfire insists that darkness is not the opposite of welcome. Sometimes it is simply where the lantern is most useful.',
+      'A small room is not made larger by its walls, but by the stories people feel safe enough to tell inside it.',
+      'Today I found a brass key with no matching lock. I have put it somewhere sensible, which means I shall never see it again.',
+      'Do not confuse a mysterious knock with a mysterious visitor. First, check whether the cat has learned to open cupboards.',
+      'There is room at the desk for another chair. No one has to sit in it.'
+    ];
+    const journalEntry=document.getElementById('journalEntry');
+    let journalPage=roomSeed%journalPages.length;
+    journalEntry.textContent=journalPages[journalPage];
+    document.getElementById('journalTurn').addEventListener('click',()=>{journalPage=(journalPage+1)%journalPages.length;journalEntry.textContent=journalPages[journalPage]});
   </script>
 </body>
 </html>
