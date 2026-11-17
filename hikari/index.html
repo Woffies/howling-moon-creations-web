@@ -128,9 +128,15 @@
       'There is room at the desk for another chair. No one has to sit in it.'
     ];
     const journalEntry=document.getElementById('journalEntry');
-    let journalPage=roomSeed%journalPages.length;
+    // Keep the reader's place on this device; a first visit starts on a dated page.
+    const savedJournalPage=Number(localStorage.getItem('hikariJournalBookmark'));
+    let journalPage=localStorage.getItem('hikariJournalBookmark')!==null && Number.isInteger(savedJournalPage) && savedJournalPage>=0 && savedJournalPage<journalPages.length ? savedJournalPage : roomSeed%journalPages.length;
     journalEntry.textContent=journalPages[journalPage];
-    document.getElementById('journalTurn').addEventListener('click',()=>{journalPage=(journalPage+1)%journalPages.length;journalEntry.textContent=journalPages[journalPage]});
+    document.getElementById('journalTurn').addEventListener('click',()=>{
+      journalPage=(journalPage+1)%journalPages.length;
+      journalEntry.textContent=journalPages[journalPage];
+      localStorage.setItem('hikariJournalBookmark',String(journalPage));
+    });
   </script>
 </body>
 </html>

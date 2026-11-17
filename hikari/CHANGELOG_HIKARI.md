@@ -1,5 +1,11 @@
 # Hikari's Room Changelog
 
+## 2026-11-16 — a bookmark in the journal
+
+- The Lantern Journal now remembers the last page turned on this device, so returning readers can pick up where they left off.
+- First-time readers still arrive at a page chosen from the day's room seed.
+- All changes remain on a separate review branch; no merge or deployment.
+
 ## 2026-09-30 — enter the room
 
 - Rebuilt the visual hierarchy around a wide establishing view from just inside Hikari's doorway.
